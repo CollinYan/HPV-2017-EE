@@ -1,0 +1,36 @@
+clear;  
+clf;
+rawSpeed = csvread('speed with 16 and 8 magnets.csv',1);
+rawSpeed = csvread('speed_rear_8.csv',1);
+%rawSpeed = csvread('back to 2khz and front wheel.csv',1);
+%rawSpeed = csvread('speed while riding.csv',1);
+%rawSpeed = csvread('front and rear wheel speed.csv',1);
+%rawSpeed(:,1:2) = rawSpeed(:,3:4);
+startI = 870;
+endI = length(rawSpeed) - 2000;
+movNum = 50;
+movmeanSpeed = movmean(rawSpeed(startI:endI,1),movNum);
+
+error = rawSpeed(:,2) ./ rawSpeed(:,1);
+errorMM = rawSpeed(startI:endI,2) ./ movmeanSpeed(:,1);
+movmeanerror = movmean(error,100);
+errorAverageRef = (rawSpeed(startI:endI,1)-movmeanSpeed) ./ movmeanSpeed;
+%plot (rawSpeed(startI:endI,2));
+hold on;
+%plot (errorMM(:)*100);
+hold on;
+plot(errorAverageRef*100);
+%plot ( error(startI:endI)*100);
+%plot ( movmeanerror(startI:endI)*100);
+ylabel('% error');
+ylim([-10 10]);
+
+yyaxis right;
+plot(rawSpeed(startI:endI,1));
+hold on;
+plot(movmeanSpeed,'g');
+ylabel('speed [mph]');
+xlabel('samples');
+legend('diff','error','speed','speed smoothed');
+ax = gca;
+set(ax,'Fontsize', 24);

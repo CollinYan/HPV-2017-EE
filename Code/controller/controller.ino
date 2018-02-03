@@ -1,18 +1,21 @@
 const int potPin = A0;   // Braking input: ranges from min value to max value, should convert to servo value 0-280 deg
-const int tiltPin = A1;  // High or low voltage "bool" 
+const int tiltPin = A1;  // Tilt lever input: ranges from the same values as potpin
 const int pwmPin1 = 5;   // Output to the tilt lock servo
 const int pwmPin2 = 6;   // Output to the brake servo for one wheel
 const int pwmPin3 = 7;   // Output to the brake servo for the second wheel
 
-int potVal;    // value read in from brake lever
+int potRead;    // value read in from brake lever
+int tiltRead;   // value read in from tilt lever
 
-bool locked = false;              // True if lever is held in same position for 3 seconds = 3000 ms
-int servoVal;                     // potval converted to servo val
-unsigned long timeAtChange = 0;   // Time at which the brake lever position last changed
-int prevServoVal = 0;
-int lockedVal = 0;
+bool locked = false;                  // True if tilt lever is held in same position for 3 seconds = 3000 ms
+int tiltServoVal;                     // pot read converted to tilt servo val
+int prevTiltServoVal = 0;
+unsigned long timeAtChange = 0;       // Time at which the brake lever position last changed
+int lockedVal = 0;                    // Locked tilt lock value
 
-int servoOutput;             // same servo output for brake and tilt lock
+int tiltServoOutput;                  // servo output for tiltlock
+int brakeServoOutput;                 // servo output for brake
+
 int minServoRange = 0;
 int maxServoRange = 280;
 
@@ -24,37 +27,39 @@ void setup() {
 }
 
 void loop() {
-  potVal = analogRead(potPin);
-  servoVal = convertToServo(potVal);
-
+  potRead = analogRead(potPin);
+  tiltRead = analogRead(tiltPin);
+  tiltServoVal = convertToServo(tiltRead);
+  brakeServoOutput = convertToServo(potRead);
+  
   if (locked == true) {
-    if (servoVal > prevServoVal) {
+    if (tiltServoVal > prevTiltServoVal) {
       locked = false;
-      servoOutput = servoVal;
+      tiltServoOutput = tiltServoVal;
       updateTimeAndVals();
     }
     else {
-      servoOutput = lockedVal;
+      tiltServoOutput = lockedVal;
       updateTimeAndVals();
     }
   }
   
   else if (locked != true) {
-    if (servoVal != prevServoVal) {
-      servoOutput = servoVal;
+    if (tiltServoVal != prevTiltServoVal) {
+      tiltServoOutput = tiltServoVal;
       updateTimeAndVals();
     } 
     else {
       if (millis() - timeAtChange > 3000) {  // dont update timeatchange
         locked = true;
-        lockedVal = servoVal;
-        servoOutput = servoVal;
+        lockedVal = tiltServoVal;
+        tiltServoOutput = tiltServoVal;
       }
     }
   }
 
-  digitalWrite(pwmPin1, servoOutput);   
-  digitalWrite(pwmPin2, servoOutput);  // outputs the same value for both wheels and tiltlock
-  digitalWrite(pwmPin3, servoOutput);
+  digitalWrite(pwmPin1, tiltServoOutput);  // output to tilt lock servo 
+  digitalWrite(pwmPin2, brakeServoOutput);  // outputs the same value for both wheels
+  digitalWrite(pwmPin3, brakeServoOutput);
   delay(10);
 }

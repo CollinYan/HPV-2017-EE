@@ -1,12 +1,12 @@
 int convertToServo(int value) {
-  int minValue;                           // remember to set these based on voltage range
-  int maxValue;
+  int minValue = 0;           // volts
+  int maxValue = 3.3;
   int ratio = value / (maxValue - minValue);
   return (ratio * (maxServoRange - minServoRange)) + minServoRange;
 }
 
 void updateTimeAndVals() {
-  prevServoVal = servoVal;
+  prevTiltServoVal = tiltServoVal;
   timeAtChange = millis();
 }
 

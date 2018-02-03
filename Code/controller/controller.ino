@@ -1,14 +1,10 @@
+#include "Servo.h"
 const int potPin = A0;   // Braking input: ranges from min value to max value, should convert to servo value 0-280 deg
 const int tiltPin = A1;  // Tilt lever input: ranges from the same values as potpin
 const int pwmPin1 = 5;   // Output to the tilt lock servo
 const int pwmPin2 = 6;   // Output to the brake servo for one wheel
 const int pwmPin3 = 7;   // Output to the brake servo for the second wheel
-<<<<<<< HEAD
-             
-int potVal;              // Ideal hardware design for 0V to 3.33V, which translates to max range of 0 to 1024 ADC output
-bool tiltVal;
-=======
->>>>>>> f5ad5bfae0180cf04861ba227bb3ee46e0db9fae
+
 
 int potRead;    // value read in from brake lever
 int tiltRead;   // value read in from tilt lever
@@ -25,11 +21,13 @@ int brakeServoOutput;                 // servo output for brake
 int minServoRange = 0;
 int maxServoRange = 280;
 
-
+Servo myservo;
 void setup() {
   pinMode(pwmPin1, OUTPUT);  
   pinMode(pwmPin2, OUTPUT);
   pinMode(pwmPin3, OUTPUT);
+  
+  myservo.attach(pwmPin1);  
 }
 
 void loop() {
@@ -63,7 +61,7 @@ void loop() {
       }
     }
   }
-
+  myservo.write(tiltServoOutput);
   digitalWrite(pwmPin1, tiltServoOutput);  // output to tilt lock servo 
   digitalWrite(pwmPin2, brakeServoOutput);  // outputs the same value for both wheels
   digitalWrite(pwmPin3, brakeServoOutput);

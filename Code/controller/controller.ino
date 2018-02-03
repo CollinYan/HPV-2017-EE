@@ -4,7 +4,7 @@ const int pwmPin1 = 5;   // Output to the tilt lock servo
 const int pwmPin2 = 6;   // Output to the brake servo for one wheel
 const int pwmPin3 = 7;   // Output to the brake servo for the second wheel
              
-int potVal;
+int potVal;              // Ideal hardware design for 0V to 3.33V, which translates to max range of 0 to 1024 ADC output
 bool tiltVal;
 
 bool locked;

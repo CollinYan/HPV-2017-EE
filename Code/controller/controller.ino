@@ -61,7 +61,7 @@ void loop() {
       }
     }
   }
-  myservo.write(tiltServoOutput);
+  myservo.write(tiltServoOutput); 
   digitalWrite(pwmPin1, tiltServoOutput);  // output to tilt lock servo 
   digitalWrite(pwmPin2, brakeServoOutput);  // outputs the same value for both wheels
   digitalWrite(pwmPin3, brakeServoOutput);

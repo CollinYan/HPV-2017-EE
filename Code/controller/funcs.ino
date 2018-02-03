@@ -1,7 +1,7 @@
-int convertToServo(int value) {
-  int minValue = 0;           // volts
-  int maxValue = 3.3;
-  int ratio = value / (maxValue - minValue);
+int convertToServo(double value) {
+  double minValue = 0;           // volts
+  double maxValue = 3.3;
+  double ratio = value / (maxValue - minValue);
   return (ratio * (maxServoRange - minServoRange)) + minServoRange;
 }
 

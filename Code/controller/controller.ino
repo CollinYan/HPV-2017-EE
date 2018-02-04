@@ -28,6 +28,10 @@ void setup() {
   pinMode(pwmPin3, OUTPUT);
   
   myservo.attach(pwmPin1);  
+
+  Serial.begin(9600);
+  Serial.println("-- initialized --");
+  Serial.println();
 }
 
 void loop() {
@@ -61,6 +65,9 @@ void loop() {
       }
     }
   }
+
+  Serial.println("tiltServoOutput: " + tiltServoOutput);
+  
   myservo.write(tiltServoOutput); 
   digitalWrite(pwmPin1, tiltServoOutput);  // output to tilt lock servo 
   digitalWrite(pwmPin2, brakeServoOutput);  // outputs the same value for both wheels

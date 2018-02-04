@@ -5,7 +5,6 @@ const int pwmPin1 = 5;   // Output to the tilt lock servo
 const int pwmPin2 = 6;   // Output to the brake servo for one wheel
 const int pwmPin3 = 7;   // Output to the brake servo for the second wheel
 
-
 int potRead;    // value read in from brake lever
 int tiltRead;   // value read in from tilt lever
 
@@ -19,7 +18,7 @@ int tiltServoOutput;                  // servo output for tiltlock
 int brakeServoOutput;                 // servo output for brake
 
 int minServoRange = 0;
-int maxServoRange = 280;
+int maxServoRange = 180;
 
 Servo myservo;
 void setup() {
@@ -37,18 +36,23 @@ void setup() {
 void loop() {
   potRead = analogRead(potPin);
   tiltRead = analogRead(tiltPin);
+  Serial.print("tiltRead: ");
+  Serial.println(tiltRead);
+  Serial.println("");
+  
   tiltServoVal = convertToServo(tiltRead);
   brakeServoOutput = convertToServo(potRead);
   
   if (locked == true) {
-    if (tiltServoVal > prevTiltServoVal) {
+    if (tiltServoVal > prevTiltServoVal + 4) {
       locked = false;
       tiltServoOutput = tiltServoVal;
       updateTimeAndVals();
+      Serial.println("unlocked");
     }
     else {
       tiltServoOutput = lockedVal;
-      updateTimeAndVals();
+      // updateTimeAndVals();
     }
   }
   
@@ -62,15 +66,14 @@ void loop() {
         locked = true;
         lockedVal = tiltServoVal;
         tiltServoOutput = tiltServoVal;
+        Serial.println("locked");
       }
     }
   }
 
-  Serial.println("tiltServoOutput: " + tiltServoOutput);
+  Serial.print("tiltServoOutput: ");
+  Serial.println(tiltServoOutput);
   
   myservo.write(tiltServoOutput); 
-  digitalWrite(pwmPin1, tiltServoOutput);  // output to tilt lock servo 
-  digitalWrite(pwmPin2, brakeServoOutput);  // outputs the same value for both wheels
-  digitalWrite(pwmPin3, brakeServoOutput);
-  delay(10);
+  delay(100);
 }

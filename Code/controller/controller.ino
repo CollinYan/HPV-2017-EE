@@ -22,10 +22,11 @@ int minServoRange = 0;
 int maxServoRange = 180;
 
 Servo brakeServo;
+Servo tiltServo;
 
 void setup() {  
-  myservo.attach(brakePin1);  
-
+  brakeServo.attach(brakePin1);  
+  tiltServo.attach(tiltServoPin);  
   Serial.begin(9600);
   Serial.println("-- initialized --");
   Serial.println();
@@ -73,5 +74,6 @@ void loop() {
   Serial.println(tiltServoOutput);
   
   brakeServo.write(brakeServoOutput); 
-  delay(100);
+  tiltServo.write(tiltServoOutput); 
+  delay(10);
 }

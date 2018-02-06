@@ -1,11 +1,12 @@
 #include "Servo.h"
-const int potPin = A0;   // Braking input: ranges from min value to max value, should convert to servo value 0-280 deg
-const int tiltPin = A1;  // Tilt lever input: ranges from the same values as potpin
-const int pwmPin1 = 5;   // Output to the tilt lock servo
-const int pwmPin2 = 6;   // Output to the brake servo for one wheel
-const int pwmPin3 = 7;   // Output to the brake servo for the second wheel
+const int brakePin1 = A0;     // Braking input: ranges from min value to max value, should convert to servo value 0-180 deg
+const int brakePin2 = A1;     // Braking input: ranges from min value to max value, should convert to servo value 0-180 deg
+const int tiltPin = A2;       // Tilt lever input: ranges from the same values as potpin
+const int brakePWMPin1 = 5;   // Output to the brake servo for one wheel
+const int brakePWMPin2 = 6;   // Output to the brake servo for the second wheel 
+const int tilPWMPin = 7;      // Output to the tilt lock servo
 
-int potRead;    // value read in from brake lever
+int brakeRead1;    // value read in from brake lever
 int tiltRead;   // value read in from tilt lever
 
 bool locked = false;                  // True if tilt lever is held in same position for 3 seconds = 3000 ms
@@ -20,13 +21,10 @@ int brakeServoOutput;                 // servo output for brake
 int minServoRange = 0;
 int maxServoRange = 180;
 
-Servo myservo;
-void setup() {
-  pinMode(pwmPin1, OUTPUT);  
-  pinMode(pwmPin2, OUTPUT);
-  pinMode(pwmPin3, OUTPUT);
-  
-  myservo.attach(pwmPin1);  
+Servo brakeServo;
+
+void setup() {  
+  myservo.attach(brakePin1);  
 
   Serial.begin(9600);
   Serial.println("-- initialized --");
@@ -34,14 +32,14 @@ void setup() {
 }
 
 void loop() {
-  potRead = analogRead(potPin);
+  brakeRead1 = analogRead(brakePin1);
   tiltRead = analogRead(tiltPin);
   Serial.print("tiltRead: ");
   Serial.println(tiltRead);
   Serial.println("");
   
   tiltServoVal = convertToServo(tiltRead);
-  brakeServoOutput = convertToServo(potRead);
+  brakeServoOutput = convertToServo(brakeRead1);
   
   if (locked == true) {
     if (tiltServoVal > prevTiltServoVal + 4) {
@@ -74,6 +72,6 @@ void loop() {
   Serial.print("tiltServoOutput: ");
   Serial.println(tiltServoOutput);
   
-  myservo.write(tiltServoOutput); 
+  brakeServo.write(brakeServoOutput); 
   delay(100);
 }

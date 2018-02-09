@@ -20,14 +20,14 @@ int brakeServoOutput;                 // servo output for brake
 
 int minValue = 1.100 * 1023/3.3;                                                      // 0-3.3V converted to 0-1023
 int maxValue = 1.200 * 1023/3.3;
-int minServoRange = 70;
-int maxServoRange = 170;
+int minServoRange = 110;
+int maxServoRange = 175;
 
 Servo brakeServo1;
 Servo tiltServo;
 
 /*for smoothing break input*/
-AnalogSmoothInt smoothedBrake1 = AnalogSmoothInt(10);
+AnalogSmoothInt smoothedBrake1 = AnalogSmoothInt(20);
 
 boolean leverReadTicked = 0;
 
@@ -41,9 +41,10 @@ void setup() {
 }
 
 void loop() {
-  //200Hz brake lever reading
-  if (!(millis()%5) && !leverReadTicked) {
+  //500Hz brake lever reading
+  if (!(millis()%2) && !leverReadTicked) {
     /*brake 1*/
+    analogRead(brakePin1);
     brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
     brakeServoOutput = convertToServo(brakeRead1);
     //brakeServo1.write(brakeServoOutput); 
@@ -62,6 +63,7 @@ void loop() {
     
     leverReadTicked = 1;
 
+    /*
     if (!millis()%500) {
       //Serial.print("tiltServoOutput: ");
       //Serial.println(tiltServoOutput);
@@ -76,9 +78,9 @@ void loop() {
       Serial.print("\t");
       Serial.println();
     }
+    */
   } else if (millis()%10) {
     leverReadTicked = 0;
   }
 
-  delay(1);
 }

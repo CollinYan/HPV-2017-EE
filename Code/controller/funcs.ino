@@ -13,14 +13,14 @@ void updateTimeAndVals() {
 
 void processTiltServoOutput() {
   if (locked == true) {
-    if (tiltServoOutput > minTiltServoOutput+ 20) {                                            //unlock
+    if (tiltServoOutput > minTiltServoOutput+ 20) {                                              //unlock
       locked = false;
       updateTimeAndVals();
       //Serial.println("unlocked");
     }
     else {                                                                                        //stay locked
       minTiltServoOutput = min(minTiltServoOutput, tiltServoOutput);
-      tiltServoOutput = lockedTiltServoOutput;
+      tiltServoOutput = lockedTiltServoOutput-8;
       //Serial.println("staying locked");
     }
   }
@@ -29,7 +29,7 @@ void processTiltServoOutput() {
     if (lockedTiltServoOutput-9<tiltServoOutput && tiltServoOutput<lockedTiltServoOutput+9) {     //within lock range
       if (millis() - timeAtChange > 3000) {                                                       //within range long enough, lock
         locked = true;
-        tiltServoOutput = lockedTiltServoOutput;
+        tiltServoOutput = lockedTiltServoOutput-4; //move it back a bit to save battery
         minTiltServoOutput = lockedTiltServoOutput;
         //Serial.println("locked");
         //Serial.println("engaging lock");

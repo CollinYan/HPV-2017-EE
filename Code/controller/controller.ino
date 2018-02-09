@@ -7,8 +7,8 @@ const int brakePWMPin1 = 5;   // Output to the brake servo for one wheel
 const int brakePWMPin2 = 6;   // Output to the brake servo for the second wheel 
 const int tiltPWMPin = 7;      // Output to the tilt lock servo
 
-int brakeRead1;    // value read in from brake lever
-int tiltRead;   // value read in from tilt lever
+float brakeRead1;    // value read in from brake lever
+float tiltRead;   // value read in from tilt lever
 
 bool locked = false;                  // True if tilt lever is held in same position for 3 seconds = 3000 ms
 unsigned long timeAtChange = 0;       // Time at which the brake lever position last changed
@@ -42,16 +42,20 @@ void setup() {
 
 void loop() {
   //200Hz brake lever reading
-  if (!millis()%5 && !leverReadTicked) {
+  if (!(millis()%5) && !leverReadTicked) {
     /*brake 1*/
     brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
     brakeServoOutput = convertToServo(brakeRead1);
-    brakeServo1.write(brakeServoOutput); 
+    //brakeServo1.write(brakeServoOutput); 
 
     /*tilt*/
     tiltRead = analogRead(tiltPin);
     tiltServoOutput = convertToServo(tiltRead);
+    tiltServoOutput = brakeServoOutput;
+    Serial.print(tiltServoOutput);
+    Serial.println();
     processTiltServoOutput();
+    brakeServo1.write(tiltServoOutput); 
     tiltServo.write(tiltServoOutput); 
     
     leverReadTicked = 1;

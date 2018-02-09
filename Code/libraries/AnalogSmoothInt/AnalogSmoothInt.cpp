@@ -57,7 +57,7 @@ float AnalogSmoothInt::smooth(int value)
   this->_total += this->_analog[this->_analogPointer];
 
   // Calculate the moving average
-	float avg = this->_total / (this->_maxPointer + 1);
+	float avg = (float)this->_total / (this->_maxPointer + 1);
 	  
 	// Keep track of how many items we have in the array
 	if (this->_maxPointer < this->_windowSize - 1) {

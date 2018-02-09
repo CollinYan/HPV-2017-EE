@@ -16,12 +16,12 @@ void processTiltServoOutput() {
     if (tiltServoOutput > minTiltServoOutput+ 20) {                                            //unlock
       locked = false;
       updateTimeAndVals();
-      Serial.println("unlocked");
+      //Serial.println("unlocked");
     }
     else {                                                                                        //stay locked
       minTiltServoOutput = min(minTiltServoOutput, tiltServoOutput);
       tiltServoOutput = lockedTiltServoOutput;
-      Serial.println("staying locked");
+      //Serial.println("staying locked");
     }
   }
   
@@ -31,17 +31,17 @@ void processTiltServoOutput() {
         locked = true;
         tiltServoOutput = lockedTiltServoOutput;
         minTiltServoOutput = lockedTiltServoOutput;
-        Serial.println("locked");
-        Serial.println("engaging lock");
+        //Serial.println("locked");
+        //Serial.println("engaging lock");
       } 
       else {                                                                    
         tiltServoOutput = tiltServoOutput;                                                        //update but keep old time since within range
-        Serial.println("within range");
+        //Serial.println("within range");
       }
     } 
     else {                                                                                        //not within range, just update                                  
       updateTimeAndVals(); 
-      Serial.println("not within range");
+      //Serial.println("not within range");
     }
   }
 }

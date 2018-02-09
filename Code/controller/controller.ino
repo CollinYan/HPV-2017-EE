@@ -27,7 +27,7 @@ Servo brakeServo1;
 Servo tiltServo;
 
 /*for smoothing break input*/
-AnalogSmoothInt smoothedBrake1 = AnalogSmoothInt(5);
+AnalogSmoothInt smoothedBrake1 = AnalogSmoothInt(10);
 
 boolean leverReadTicked = 0;
 
@@ -53,8 +53,10 @@ void loop() {
     tiltServoOutput = convertToServo(tiltRead);
     tiltServoOutput = brakeServoOutput;
     Serial.print(tiltServoOutput);
-    Serial.println();
+    Serial.print("\t");
     processTiltServoOutput();
+    Serial.print(tiltServoOutput);
+    Serial.println();
     brakeServo1.write(tiltServoOutput); 
     tiltServo.write(tiltServoOutput); 
     

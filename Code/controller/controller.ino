@@ -12,6 +12,7 @@ int tiltRead;   // value read in from tilt lever
 
 bool locked = false;                  // True if tilt lever is held in same position for 3 seconds = 3000 ms
 unsigned long timeAtChange = 0;       // Time at which the brake lever position last changed
+int minTiltServoOutput = 0;
 int lockedTiltServoOutput = 0;                    // Locked tilt lock value
 
 int tiltServoOutput;                  // servo output for tiltlock

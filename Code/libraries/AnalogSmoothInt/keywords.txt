@@ -1,0 +1,2 @@
+AnalogSmoothInt	KEYWORD1
+analogReadSmooth	KEYWORD2

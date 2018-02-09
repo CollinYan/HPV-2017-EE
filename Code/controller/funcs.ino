@@ -7,27 +7,36 @@ int convertToServo(double brakeIn) {
 }
 
 void updateTimeAndVals() {
-  prevTiltServoVal = tiltServoVal;
+  lockedTiltServoOutput = tiltServoOutput;
   timeAtChange = millis();
 }
 
-void smooth() {
-  total = total - readings[readIndex];
-  // read from the sensor:
-  readings[readIndex] = brakeRead1;
-  // add the reading to the total:
-  total = total + readings[readIndex];
-  // advance to the next position in the array:
-  readIndex = readIndex + 1;
-
-  // if we're at the end of the array...
-  if (readIndex >= numReadings) {
-    // ...wrap around to the beginning:
-    readIndex = 0;
+void processTiltServoOutput() {
+  if (locked == true) {
+    if (tiltServoOutput > lockedTiltServoOutput + 4) {                                            //unlock
+      locked = false;
+      updateTimeAndVals();
+      Serial.println("unlocked");
+    }
+    else {                                                                                        //stay locked
+      tiltServoOutput = lockedTiltServoOutput;
+    }
   }
-
-  // calculate the average:
-  average = total / numReadings;
-  brakeRead1 = average;
+  
+  else if (locked != true) {
+    if (lockedTiltServoOutput-2<tiltServoOutput && tiltServoOutput<lockedTiltServoOutput+2) {     //within lock range
+      if (millis() - timeAtChange > 3000) {                                                       //within range long enough, lock
+        locked = true;
+        tiltServoOutput = lockedTiltServoOutput;
+        Serial.println("locked");
+      } 
+      else {                                                                    
+        tiltServoOutput = tiltServoOutput;                                                        //update but keep old time since within range
+      }
+    } 
+    else {                                                                                        //not within range, just update                                  
+      updateTimeAndVals(); 
+    }
+  }
 }
 

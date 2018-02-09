@@ -1,10 +1,11 @@
 #include "Servo.h"
+#include "AnalogSmooth.h"
 const int brakePin1 = A0;     // Braking input: ranges from min value to max value, should convert to servo value 0-180 deg
 const int brakePin2 = A1;     // Braking input: ranges from min value to max value, should convert to servo value 0-180 deg
 const int tiltPin = A2;       // Tilt lever input: ranges from the same values as potpin
 const int brakePWMPin1 = 5;   // Output to the brake servo for one wheel
 const int brakePWMPin2 = 6;   // Output to the brake servo for the second wheel 
-const int tilPWMPin = 7;      // Output to the tilt lock servo
+const int tiltPWMPin = 7;      // Output to the tilt lock servo
 
 int brakeRead1;    // value read in from brake lever
 int tiltRead;   // value read in from tilt lever
@@ -18,15 +19,27 @@ int lockedVal = 0;                    // Locked tilt lock value
 int tiltServoOutput;                  // servo output for tiltlock
 int brakeServoOutput;                 // servo output for brake
 
-int minServoRange = 0;
-int maxServoRange = 180;
+int minValue = 1.100 * 1023/3.3;                                                      // 0-3.3V converted to 0-1023
+int maxValue = 1.200 * 1023/3.3;
+int minServoRange = 70;
+int maxServoRange = 170;
 
 Servo brakeServo;
 Servo tiltServo;
 
+/*for smoothing break input*/
+const int numReadings = 10;
+int readings[numReadings];      // the readings from the analog input
+int readIndex = 0;              // the index of the current reading
+int total = 0;                  // the running total
+int average = 0;                // the average
+
 void setup() {  
-  brakeServo.attach(brakePin1);  
-  tiltServo.attach(tiltServoPin);  
+  brakeServo.attach(brakePWMPin1,800,2200); //sets 1000us and 2000us as 0degrees and 180degrees
+  tiltServo.attach(tiltPWMPin);  
+  for (int thisReading = 0; thisReading < numReadings; thisReading++) {
+    readings[thisReading] = 0;
+  }
   Serial.begin(9600);
   Serial.println("-- initialized --");
   Serial.println();
@@ -34,11 +47,13 @@ void setup() {
 
 void loop() {
   brakeRead1 = analogRead(brakePin1);
+  smooth();
   tiltRead = analogRead(tiltPin);
-  Serial.print("tiltRead: ");
-  Serial.println(tiltRead);
-  Serial.println("");
-  
+  if ( 0 ) {
+      Serial.print("tiltRead: ");
+      Serial.println(tiltRead);
+        Serial.println("");
+  }  
   tiltServoVal = convertToServo(tiltRead);
   brakeServoOutput = convertToServo(brakeRead1);
   
@@ -70,10 +85,15 @@ void loop() {
     }
   }
 
-  Serial.print("tiltServoOutput: ");
-  Serial.println(tiltServoOutput);
+  //Serial.print("tiltServoOutput: ");
+  //Serial.println(tiltServoOutput);
+  Serial.print("brakeServoOutput: ");
+  Serial.print(brakeServoOutput);
+  Serial.print("\t");
+  Serial.print(brakeRead1);
+  Serial.println();
   
   brakeServo.write(brakeServoOutput); 
   tiltServo.write(tiltServoOutput); 
-  delay(10);
+  delay(1);
 }

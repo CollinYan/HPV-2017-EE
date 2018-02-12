@@ -1,6 +1,19 @@
 int convertToServo(float brakeIn) {
-
-  int angle = map(brakeIn*10, minValue*10, maxValue*10, minServoRange, maxServoRange); //maps brakeInput to servo angle
+  int angle;
+  
+  int p1 = minValue*10;
+  int p2 = minValue*10 + (maxValue*10 - minValue*10)*0.2;
+  int p3 = minValue*10 + (maxValue*10 - minValue*10)*0.5;
+  int p4 = maxValue*10
+  
+  if (brakeIn*10 < minValue*10/3) {
+    angle = map(brakeIn*10, p1, p2, minServoRange, maxServoRangE);
+  } else if (brakeIn*10 <minValue*10*2/3) {
+    angle = map(brakeIn*10, p2+1, p3, minServoRange, maxServoRangE);
+  } else {
+    angle = map(brakeIn*10, p3+1, p4, minServoRange, maxServoRangE);
+  }
+  
   angle = constrain(angle,minServoRange,maxServoRange);                               //protect servo in case voltage input goes outside of range
   return angle;
   
@@ -29,7 +42,7 @@ void processTiltServoOutput() {
     if (lockedTiltServoOutput-9<tiltServoOutput && tiltServoOutput<lockedTiltServoOutput+9) {     //within lock range
       if (millis() - timeAtChange > 3000) {                                                       //within range long enough, lock
         locked = true;
-        tiltServoOutput = lockedTiltServoOutput-4; //move it back a bit to save battery
+        lockedTiltServoOutput = tiltServoOutput;
         minTiltServoOutput = lockedTiltServoOutput;
         //Serial.println("locked");
         //Serial.println("engaging lock");

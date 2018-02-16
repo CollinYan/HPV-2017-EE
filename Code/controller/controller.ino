@@ -22,7 +22,7 @@ int minValue = 2.380 * 1023/3.3;      //1.1V to 1.2V or 2.38V to 2.93V depending
 int maxValue = 2.930 * 1023/3.3;
 int minHighTime = 800;                //min High time for PWM to servo, according to specs
 int maxHighTime = 2200;               //max High time for PWM to servo, according to specs
-int minServoRange = 110;              //0 degrees would output minHighTime
+int minServoRange = 100;              //0 degrees would output minHighTime
 int maxServoRange = 175;              //180 degrees would ouput maxHighTime
 
 Servo brakeServo1;
@@ -55,8 +55,9 @@ void loop() {
     tiltServoOutput = convertToServo(tiltRead);
     
     tiltServoOutput = brakeServoOutput;
-    Serial.println("voltage");
-    Serial.print(brakeRead1);
+    //Serial.println("voltage");
+    Serial.print(brakeRead1/8);
+    Serial.print("\t");
     Serial.print(tiltServoOutput);
     Serial.print("\t");
     

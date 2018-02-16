@@ -2,13 +2,12 @@ int convertToServo(float brakeIn) {
   int angle;
   
   int p1 = minValue*10;
-  int p2 = minValue*10 + (maxValue*10 - minValue*10)*0.2;
+  int p2 = minValue*10 + (maxValue*10 - minValue*10)*0.1;
   int p3 = minValue*10 + (maxValue*10 - minValue*10)*0.5;
   int p4 = maxValue*10;
 
-  int servoRange1 = minServoRange;
-  int servoRange2 = minServoRange + (maxServoRange-minServoRange)/3;
-  int servoRange3 = minServoRange + (maxServoRange-minServoRange)*2/3;
+  int servoRange2 = minServoRange + (maxServoRange-minServoRange)*0.4;
+  int servoRange3 = minServoRange + (maxServoRange-minServoRange)*0.7;
   
   if (brakeIn*10 < p2) {
     angle = map(brakeIn*10, p1, p2, minServoRange, servoRange2);

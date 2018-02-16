@@ -46,7 +46,6 @@ void setup() {
 void loop() {
   if (!(millis()%periodBrakeRead) && !leverReadTicked) {
     /*brake 1*/
-    Serial.println("voltage");
     brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
     brakeServoOutput = convertToServo(brakeRead1);
     //brakeServo1.write(brakeServoOutput); 
@@ -56,6 +55,8 @@ void loop() {
     tiltServoOutput = convertToServo(tiltRead);
     
     tiltServoOutput = brakeServoOutput;
+    Serial.println("voltage");
+    Serial.print(brakeRead1);
     Serial.print(tiltServoOutput);
     Serial.print("\t");
     

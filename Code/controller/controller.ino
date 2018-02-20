@@ -1,6 +1,7 @@
 #include "Servo.h"
 #include "AnalogSmoothInt.h"
 #include "ParkingLock.h"
+#include <WheelSpeed.h>
 
 /*pins*/
 const int batteryPin = A5;    // Battery voltage divided down by 10
@@ -18,7 +19,7 @@ bool batteryGood;
 
 /*LEVERS AND SERVOS variables*/
 float brakeRead1;                     // value read in from brake lever after being smoothed
-float tiltRead;                 q     // value read in from tilt lever after being smoothed
+float tiltRead;                             // value read in from tilt lever after being smoothed
 const int minValue = 2.380 * 1023/3.3;      //1.1V to 1.2V or 2.38V to 2.93V depending on potentiometer position
 const int maxValue = 2.930 * 1023/3.3;
 const int minHighTime = 800;                //min High time for PWM to servo, according to specs
@@ -43,6 +44,10 @@ ParkingLock tiltLock = ParkingLock(1000/periodBrakeRead,lockingTime, lockingTol)
 Servo brakeServo1;
 Servo tiltServo;
 
+/*WHEEL SPEED*/
+int periodWheelRead = 2;
+bool wheelReadTicked = false;
+
 void setup() {  
   brakeServo1.attach(brakePWMPin1,minHighTime,maxHighTime);
   tiltServo.attach(tiltPWMPin,minHighTime,maxHighTime);  
@@ -55,14 +60,15 @@ void setup() {
 void loop() {
   checkBat(); //checks battery voltage and sets batteryGood
   
-  if (!(millis()%periodBrakeRead) && !leverReadTicked && batteryGood) {
+  /*This loop is entered once every 'periodBrakeRead' milliseconds, given that the rest of the program doesn't take too long*/
+  if (!(millis()%periodBrakeRead) && !leverReadTicked && batteryGood) {         
     /*brake 1*/
     brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
     brakeServoOutput1 = convertToServo(brakeRead1);
     brakeServoOutputProcessed1 = brakeLock1.processParkingLock(brakeServoOutput1);
     brakeServo1.write(brakeServoOutputProcessed1); 
     /*tilt*/
-    tiltRead = smoothedTile.analogReadSmooth(tiltPin);
+    tiltRead = smoothedTilt.analogReadSmooth(tiltPin);
     tiltServoOutput = convertToServo(tiltRead);
     tiltServoOutputProcessed = tiltLock.processParkingLock(tiltServoOutput);
     tiltServo.write(tiltServoOutputProcessed); 
@@ -73,6 +79,10 @@ void loop() {
     Serial.println();
   } else if (millis()%periodBrakeRead) {
     leverReadTicked = 0;
+  }
+
+  if (!(millis()&periodWheelRead) && !wheelReadTicked) {
+    
   }
   
 }

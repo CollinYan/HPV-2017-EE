@@ -2,6 +2,10 @@
 #include "AnalogSmoothInt.h"
 #include "ParkingLock.h"
 #include <WheelSpeed.h>
+#include "CurieTimerOne.h"
+
+// Comment the following statement to disable logging on serial port.
+#define SERIAL_PORT_LOG_ENABLE 1
 
 /*pins*/
 const int batteryPin = A5;    // Battery voltage divided down by 10
@@ -45,12 +49,14 @@ Servo brakeServo1;
 Servo tiltServo;
 
 /*WHEEL SPEED*/
-int periodWheelRead = 2;
+const int periodWheelRead = 1000;           //1ms in microseconds.
 bool wheelReadTicked = false;
 
 void setup() {  
   brakeServo1.attach(brakePWMPin1,minHighTime,maxHighTime);
   tiltServo.attach(tiltPWMPin,minHighTime,maxHighTime);  
+
+  CurieTimerOne.start(periodWheelRead, &checkMagnetIsr);  // set timer and callback
   
   Serial.begin(9600);
   Serial.println("-- initialized --");
@@ -79,10 +85,5 @@ void loop() {
     Serial.println();
   } else if (millis()%periodBrakeRead) {
     leverReadTicked = 0;
-  }
-
-  if (!(millis()&periodWheelRead) && !wheelReadTicked) {
-    
-  }
-  
+  }  
 }

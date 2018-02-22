@@ -1724,47 +1724,47 @@ design rules under a new name.
 <element name="C8" library="adafruit" package="C0603" value="1n" x="45.72" y="22.86" smashed="yes" rot="R270">
 <attribute name="NAME" x="46.482" y="23.749" size="1.27" layer="25" rot="R270"/>
 </element>
-<element name="CONN1" library="ee192" package="ANDERSON_HORIZONTAL" value="ANDERSONHORIZONTAL" x="50.8" y="50.8" rot="MR270">
+<element name="14V8" library="ee192" package="ANDERSON_HORIZONTAL" value="ANDERSONHORIZONTAL" x="50.8" y="50.8" rot="MR270">
 <attribute name="PIE-INT-REF-NUM" value="Anderson" x="50.8" y="50.8" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
-<element name="JP1" library="ee192" package="1X02" value="" x="24.13" y="10.16" rot="R90">
+<element name="STEER" library="ee192" package="1X02" value="" x="24.13" y="10.16" rot="R90">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="24.13" y="10.16" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="JP10" library="ee192" package="1X03" value="" x="24.13" y="45.72" rot="R270">
+<element name="BS2" library="ee192" package="1X03" value="" x="24.13" y="45.72" rot="R270">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="24.13" y="45.72" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="JP11" library="ee192" package="1X03" value="" x="30.48" y="52.07">
+<element name="BS3" library="ee192" package="1X03" value="" x="30.48" y="52.07">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="30.48" y="52.07" size="1.778" layer="27" display="off"/>
 </element>
-<element name="JP12" library="ee192" package="1X03" value="" x="39.37" y="52.07">
+<element name="TS" library="ee192" package="1X03" value="" x="39.37" y="52.07">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="39.37" y="52.07" size="1.778" layer="27" display="off"/>
 </element>
 <element name="JP13" library="ee192" package="STAND-OFF" value="STAND-OFF" x="24.13" y="3.81"/>
 <element name="JP14" library="ee192" package="STAND-OFF" value="STAND-OFF" x="63.5" y="5.08"/>
 <element name="JP15" library="ee192" package="STAND-OFF" value="STAND-OFF" x="24.13" y="55.88"/>
 <element name="JP16" library="ee192" package="STAND-OFF" value="STAND-OFF" x="64.77" y="55.88"/>
-<element name="JP2" library="ee192" package="1X02" value="" x="24.13" y="16.51" rot="R90">
+<element name="WHL1" library="ee192" package="1X02" value="" x="24.13" y="16.51" rot="R90">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="24.13" y="16.51" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="JP3" library="ee192" package="1X02" value="" x="24.13" y="22.86" rot="R90">
+<element name="WHL2" library="ee192" package="1X02" value="" x="24.13" y="22.86" rot="R90">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="24.13" y="22.86" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="JP4" library="ee192" package="1X02" value="" x="24.13" y="29.21" rot="R90">
+<element name="WHL3" library="ee192" package="1X02" value="" x="24.13" y="29.21" rot="R90">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="24.13" y="29.21" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="JP5" library="ee192" package="1X02" value="" x="66.04" y="12.7" rot="R90">
+<element name="BL1" library="ee192" package="1X02" value="" x="66.04" y="12.7" rot="R90">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="66.04" y="12.7" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="JP6" library="ee192" package="1X02" value="" x="66.04" y="19.05" rot="R90">
+<element name="BL2" library="ee192" package="1X02" value="" x="66.04" y="19.05" rot="R90">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="66.04" y="19.05" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="JP7" library="ee192" package="1X02" value="" x="66.04" y="25.4" rot="R90">
+<element name="BL3" library="ee192" package="1X02" value="" x="66.04" y="25.4" rot="R90">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="66.04" y="25.4" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="JP8" library="ee192" package="1X02" value="" x="66.04" y="31.75" rot="R90">
+<element name="TL" library="ee192" package="1X02" value="" x="66.04" y="31.75" rot="R90">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="66.04" y="31.75" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="JP9" library="ee192" package="1X03" value="" x="24.13" y="36.83" rot="R270">
+<element name="BS1" library="ee192" package="1X03" value="" x="24.13" y="36.83" rot="R270">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="24.13" y="36.83" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="R1" library="resistor" package="R0603" value="5.1k" x="58.42" y="17.78" smashed="yes" rot="R90">
@@ -1819,7 +1819,7 @@ design rules under a new name.
 <contactref element="U$1" pad="A0"/>
 <contactref element="R1" pad="2"/>
 <contactref element="C1" pad="1"/>
-<contactref element="JP5" pad="1"/>
+<contactref element="BL1" pad="1"/>
 <wire x1="60.96" y1="18.63" x2="66.04" y2="11.43" width="0" layer="19" extent="1-1"/>
 <wire x1="58.42" y1="18.63" x2="60.96" y2="18.63" width="0" layer="19" extent="1-1"/>
 <wire x1="53.34" y1="22.86" x2="58.42" y2="18.63" width="0" layer="19" extent="1-1"/>
@@ -1828,7 +1828,7 @@ design rules under a new name.
 <contactref element="U$1" pad="A1"/>
 <contactref element="R2" pad="2"/>
 <contactref element="C2" pad="1"/>
-<contactref element="JP6" pad="1"/>
+<contactref element="BL2" pad="1"/>
 <wire x1="60.96" y1="22.44" x2="66.04" y2="17.78" width="0" layer="19" extent="1-1"/>
 <wire x1="58.42" y1="22.44" x2="60.96" y2="22.44" width="0" layer="19" extent="1-1"/>
 <wire x1="53.34" y1="25.4" x2="58.42" y2="22.44" width="0" layer="19" extent="1-1"/>
@@ -1837,7 +1837,7 @@ design rules under a new name.
 <contactref element="U$1" pad="A2"/>
 <contactref element="R3" pad="2"/>
 <contactref element="C3" pad="1"/>
-<contactref element="JP7" pad="1"/>
+<contactref element="BL3" pad="1"/>
 <wire x1="60.96" y1="26.25" x2="66.04" y2="24.13" width="0" layer="19" extent="1-1"/>
 <wire x1="58.42" y1="26.25" x2="60.96" y2="26.25" width="0" layer="19" extent="1-1"/>
 <wire x1="53.34" y1="27.94" x2="58.42" y2="26.25" width="0" layer="19" extent="1-1"/>
@@ -1846,29 +1846,29 @@ design rules under a new name.
 <contactref element="U$1" pad="A3"/>
 <contactref element="R4" pad="2"/>
 <contactref element="C4" pad="1"/>
-<contactref element="JP8" pad="1"/>
+<contactref element="TL" pad="1"/>
 <wire x1="60.96" y1="30.06" x2="66.04" y2="30.48" width="0" layer="19" extent="1-1"/>
 <wire x1="58.42" y1="30.06" x2="60.96" y2="30.06" width="0" layer="19" extent="1-1"/>
 <wire x1="53.34" y1="30.48" x2="58.42" y2="30.06" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="TILT_PWM">
 <contactref element="U$1" pad="D12"/>
-<contactref element="JP12" pad="3"/>
+<contactref element="TS" pad="3"/>
 <wire x1="33.02" y1="35.56" x2="41.91" y2="52.07" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BRAKE_PWM3">
 <contactref element="U$1" pad="D11"/>
-<contactref element="JP11" pad="3"/>
+<contactref element="BS3" pad="3"/>
 <wire x1="33.02" y1="52.07" x2="33.02" y2="33.02" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BRAKE_PWM2">
 <contactref element="U$1" pad="D10"/>
-<contactref element="JP10" pad="3"/>
+<contactref element="BS2" pad="3"/>
 <wire x1="24.13" y1="43.18" x2="33.02" y2="30.48" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BRAKE_PWM1">
 <contactref element="U$1" pad="~D9"/>
-<contactref element="JP9" pad="3"/>
+<contactref element="BS1" pad="3"/>
 <wire x1="24.13" y1="34.29" x2="33.02" y2="27.94" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="3V7">
@@ -1892,13 +1892,13 @@ design rules under a new name.
 <contactref element="C7" pad="2"/>
 <contactref element="R11" pad="1"/>
 <contactref element="C8" pad="2"/>
-<contactref element="JP9" pad="2"/>
-<contactref element="JP10" pad="2"/>
-<contactref element="JP11" pad="2"/>
-<contactref element="JP12" pad="2"/>
+<contactref element="BS1" pad="2"/>
+<contactref element="BS2" pad="2"/>
+<contactref element="BS3" pad="2"/>
+<contactref element="TS" pad="2"/>
 <contactref element="R14" pad="1"/>
-<contactref element="CONN1" pad="PIN1"/>
-<contactref element="CONN1" pad="PIN1-LEAD"/>
+<contactref element="14V8" pad="PIN1"/>
+<contactref element="14V8" pad="PIN1-LEAD"/>
 <wire x1="60.96" y1="24.55" x2="60.96" y2="28.36" width="0" layer="19" extent="1-1"/>
 <wire x1="58.42" y1="28.36" x2="60.96" y2="28.36" width="0" layer="19" extent="1-1"/>
 <wire x1="45.72" y1="33.44" x2="58.42" y2="28.36" width="0" layer="19" extent="1-1"/>
@@ -1925,14 +1925,14 @@ design rules under a new name.
 </signal>
 <signal name="3V3">
 <contactref element="U$1" pad="3V3"/>
-<contactref element="JP1" pad="2"/>
-<contactref element="JP2" pad="2"/>
-<contactref element="JP3" pad="2"/>
-<contactref element="JP4" pad="2"/>
-<contactref element="JP5" pad="2"/>
-<contactref element="JP6" pad="2"/>
-<contactref element="JP7" pad="2"/>
-<contactref element="JP8" pad="2"/>
+<contactref element="STEER" pad="2"/>
+<contactref element="WHL1" pad="2"/>
+<contactref element="WHL2" pad="2"/>
+<contactref element="WHL3" pad="2"/>
+<contactref element="BL1" pad="2"/>
+<contactref element="BL2" pad="2"/>
+<contactref element="BL3" pad="2"/>
+<contactref element="TL" pad="2"/>
 <wire x1="66.04" y1="26.67" x2="66.04" y2="33.02" width="0" layer="19" extent="1-1"/>
 <wire x1="66.04" y1="20.32" x2="66.04" y2="26.67" width="0" layer="19" extent="1-1"/>
 <wire x1="66.04" y1="13.97" x2="66.04" y2="20.32" width="0" layer="19" extent="1-1"/>
@@ -1979,30 +1979,30 @@ design rules under a new name.
 <wire x1="40.64" y1="6.77" x2="43.18" y2="8.47" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$1">
-<contactref element="JP1" pad="1"/>
+<contactref element="STEER" pad="1"/>
 <contactref element="R6" pad="2"/>
 <wire x1="24.13" y1="8.89" x2="40.64" y2="8.47" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$2">
-<contactref element="JP2" pad="1"/>
+<contactref element="WHL1" pad="1"/>
 <contactref element="R8" pad="2"/>
 <wire x1="24.13" y1="15.24" x2="40.64" y2="13.55" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
-<contactref element="JP3" pad="1"/>
+<contactref element="WHL2" pad="1"/>
 <contactref element="R10" pad="2"/>
 <wire x1="24.13" y1="21.59" x2="40.64" y2="18.63" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$4">
-<contactref element="JP4" pad="1"/>
+<contactref element="WHL3" pad="1"/>
 <contactref element="R12" pad="2"/>
 <wire x1="24.13" y1="27.94" x2="40.64" y2="23.71" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="14V8">
-<contactref element="JP9" pad="1"/>
-<contactref element="JP10" pad="1"/>
-<contactref element="JP11" pad="1"/>
-<contactref element="JP12" pad="1"/>
+<contactref element="BS1" pad="1"/>
+<contactref element="BS2" pad="1"/>
+<contactref element="BS3" pad="1"/>
+<contactref element="TS" pad="1"/>
 <contactref element="R13" pad="2"/>
 <contactref element="S1" pad="1"/>
 <wire x1="62.23" y1="40.4368" x2="45.72" y2="40.22" width="0" layer="19" extent="1-1"/>
@@ -2019,8 +2019,8 @@ design rules under a new name.
 <wire x1="53.34" y1="33.02" x2="45.72" y2="35.14" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$5">
-<contactref element="CONN1" pad="PIN2"/>
-<contactref element="CONN1" pad="PIN2-LEAD"/>
+<contactref element="14V8" pad="PIN2"/>
+<contactref element="14V8" pad="PIN2-LEAD"/>
 <contactref element="S1" pad="2"/>
 <wire x1="54.737" y1="50.8" x2="62.23" y2="44.45" width="0" layer="19" extent="1-1"/>
 <wire x1="54.737" y1="56.134" x2="54.737" y2="50.8" width="0" layer="19" extent="16-16"/>

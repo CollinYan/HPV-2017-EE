@@ -6503,15 +6503,15 @@ distributor RS Components</description>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="C8" library="adafruit" deviceset="C-US" device="C0603" value="1n"/>
-<part name="R6" library="resistor" deviceset="R-US_" device="R0805" value="1k"/>
+<part name="R6" library="resistor" deviceset="R-US_" device="R0603" value="1k"/>
 <part name="JP1" library="ee192" deviceset="M02" device="PTH"/>
 <part name="CONN1" library="ee192" deviceset="ANDERSON" device="HORIZONTAL"/>
 <part name="JP9" library="ee192" deviceset="M03" device="PTH"/>
-<part name="R8" library="resistor" deviceset="R-US_" device="R0805" value="1k"/>
+<part name="R8" library="resistor" deviceset="R-US_" device="R0603" value="1k"/>
 <part name="JP2" library="ee192" deviceset="M02" device="PTH"/>
-<part name="R10" library="resistor" deviceset="R-US_" device="R0805" value="1k"/>
+<part name="R10" library="resistor" deviceset="R-US_" device="R0603" value="1k"/>
 <part name="JP3" library="ee192" deviceset="M02" device="PTH"/>
-<part name="R12" library="resistor" deviceset="R-US_" device="R0805" value="1k"/>
+<part name="R12" library="resistor" deviceset="R-US_" device="R0603" value="1k"/>
 <part name="JP4" library="ee192" deviceset="M02" device="PTH"/>
 <part name="JP5" library="ee192" deviceset="M02" device="PTH"/>
 <part name="JP6" library="ee192" deviceset="M02" device="PTH"/>
@@ -6552,7 +6552,10 @@ distributor RS Components</description>
 <instance part="R5" gate="G$1" x="27.94" y="38.1" rot="MR90"/>
 <instance part="R7" gate="G$1" x="10.16" y="43.18" rot="MR90"/>
 <instance part="R9" gate="G$1" x="-7.62" y="48.26" rot="MR90"/>
-<instance part="R11" gate="G$1" x="-25.4" y="53.34" rot="MR90"/>
+<instance part="R11" gate="G$1" x="-25.4" y="53.34" smashed="yes" rot="MR90">
+<attribute name="NAME" x="-23.9014" y="49.53" size="1.778" layer="95" rot="MR90"/>
+<attribute name="VALUE" x="-28.702" y="49.53" size="1.778" layer="96" rot="MR90"/>
+</instance>
 <instance part="C5" gate="G$1" x="20.32" y="40.64" rot="MR0"/>
 <instance part="C6" gate="G$1" x="2.54" y="45.72" rot="MR0"/>
 <instance part="C7" gate="G$1" x="-15.24" y="50.8" rot="MR0"/>

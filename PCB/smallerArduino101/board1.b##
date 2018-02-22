@@ -3,7 +3,7 @@
 <eagle version="8.6.0">
 <drawing>
 <settings>
-<setting alwaysvectorfont="yes"/>
+<setting alwaysvectorfont="no"/>
 <setting keepoldvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
@@ -145,10 +145,10 @@
 </layers>
 <board>
 <plain>
-<wire x1="20.32" y1="0" x2="130.48" y2="0" width="0" layer="20"/>
-<wire x1="130.48" y1="0" x2="130.48" y2="59.045" width="0" layer="20"/>
-<wire x1="130.48" y1="59.045" x2="20.32" y2="59.045" width="0" layer="20"/>
-<wire x1="20.32" y1="59.045" x2="20.32" y2="0" width="0" layer="20"/>
+<wire x1="20.32" y1="0" x2="68.25" y2="0" width="0" layer="20"/>
+<wire x1="68.25" y1="0" x2="68.25" y2="59.68" width="0" layer="20"/>
+<wire x1="68.25" y1="59.68" x2="20.32" y2="59.68" width="0" layer="20"/>
+<wire x1="20.32" y1="59.68" x2="20.32" y2="0" width="0" layer="20"/>
 </plain>
 <libraries>
 <library name="adafruit">
@@ -1522,7 +1522,7 @@ distributor RS Components</description>
 <variantdefs>
 </variantdefs>
 <classes>
-<class number="0" name="default" width="0.508" drill="0">
+<class number="0" name="default" width="0" drill="0">
 </class>
 </classes>
 <designrules name="default">
@@ -1605,12 +1605,12 @@ design rules under a new name.
 </designrules>
 <autorouter>
 <pass name="Default">
-<param name="RoutingGrid" value="12.5mil"/>
+<param name="RoutingGrid" value="50mil"/>
 <param name="AutoGrid" value="1"/>
 <param name="Efforts" value="0"/>
 <param name="TopRouterVariant" value="1"/>
 <param name="tpViaShape" value="round"/>
-<param name="PrefDir.1" value="-"/>
+<param name="PrefDir.1" value="a"/>
 <param name="PrefDir.2" value="0"/>
 <param name="PrefDir.3" value="0"/>
 <param name="PrefDir.4" value="0"/>
@@ -1625,7 +1625,7 @@ design rules under a new name.
 <param name="PrefDir.13" value="0"/>
 <param name="PrefDir.14" value="0"/>
 <param name="PrefDir.15" value="0"/>
-<param name="PrefDir.16" value="|"/>
+<param name="PrefDir.16" value="a"/>
 <param name="cfVia" value="8"/>
 <param name="cfNonPref" value="5"/>
 <param name="cfChangeDir" value="2"/>
@@ -1673,6 +1673,31 @@ design rules under a new name.
 </pass>
 <pass name="Route" refer="Default" active="yes">
 </pass>
+<pass name="Optimize1" refer="Default" active="yes">
+<param name="cfVia" value="99"/>
+<param name="cfExtdStep" value="10"/>
+<param name="cfHugging" value="1"/>
+<param name="mnExtdSteps" value="1"/>
+<param name="mnRipupLevel" value="0"/>
+</pass>
+<pass name="Optimize2" refer="Optimize1" active="yes">
+<param name="cfNonPref" value="0"/>
+<param name="cfChangeDir" value="6"/>
+<param name="cfExtdStep" value="0"/>
+<param name="cfBonusStep" value="2"/>
+<param name="cfMalusStep" value="2"/>
+<param name="cfPadImpact" value="2"/>
+<param name="cfSmdImpact" value="2"/>
+<param name="cfHugging" value="0"/>
+</pass>
+<pass name="Optimize3" refer="Optimize2" active="yes">
+<param name="cfChangeDir" value="8"/>
+<param name="cfPadImpact" value="0"/>
+<param name="cfSmdImpact" value="0"/>
+</pass>
+<pass name="Optimize4" refer="Optimize3" active="yes">
+<param name="cfChangeDir" value="25"/>
+</pass>
 </autorouter>
 <elements>
 <element name="C1" library="adafruit" package="C0603" value="0.1u" x="60.96" y="17.78" smashed="yes" rot="R270">
@@ -1699,8 +1724,8 @@ design rules under a new name.
 <element name="C8" library="adafruit" package="C0603" value="1n" x="45.72" y="22.86" smashed="yes" rot="R270">
 <attribute name="NAME" x="46.482" y="23.749" size="1.27" layer="25" rot="R270"/>
 </element>
-<element name="LIPO" library="ee192" package="ANDERSON_HORIZONTAL" value="ANDERSONHORIZONTAL" x="50.8" y="48.895" rot="MR270">
-<attribute name="PIE-INT-REF-NUM" value="Anderson" x="50.8" y="48.895" size="1.778" layer="28" rot="MR270" display="off"/>
+<element name="LIPO" library="ee192" package="ANDERSON_HORIZONTAL" value="ANDERSONHORIZONTAL" x="50.8" y="50.8" rot="MR270">
+<attribute name="PIE-INT-REF-NUM" value="Anderson" x="50.8" y="50.8" size="1.778" layer="28" rot="MR270" display="off"/>
 </element>
 <element name="STEER" library="ee192" package="1X02" value="" x="24.13" y="10.16" rot="R90">
 <attribute name="PIE-INT-REF-NUM" value="BULK-STOCK" x="24.13" y="10.16" size="1.778" layer="27" rot="R90" display="off"/>
@@ -1745,14 +1770,14 @@ design rules under a new name.
 <element name="R1" library="resistor" package="R0603" value="5.1k" x="58.42" y="17.78" smashed="yes" rot="R90">
 <attribute name="NAME" x="57.785" y="17.145" size="1.27" layer="25" rot="R90"/>
 </element>
-<element name="R8" library="resistor" package="R0603" value="1k" x="40.64" y="12.7" smashed="yes" rot="R270">
-<attribute name="NAME" x="41.275" y="13.335" size="1.27" layer="25" rot="R270"/>
+<element name="R8" library="resistor" package="R0603" value="1k" x="40.64" y="12.7" smashed="yes" rot="R90">
+<attribute name="NAME" x="40.005" y="12.065" size="1.27" layer="25" rot="R90"/>
 </element>
-<element name="R10" library="resistor" package="R0603" value="1k" x="40.64" y="17.78" smashed="yes" rot="R270">
-<attribute name="NAME" x="41.275" y="18.415" size="1.27" layer="25" rot="R270"/>
+<element name="R10" library="resistor" package="R0603" value="1k" x="40.64" y="17.78" smashed="yes" rot="R90">
+<attribute name="NAME" x="40.005" y="17.145" size="1.27" layer="25" rot="R90"/>
 </element>
-<element name="R12" library="resistor" package="R0603" value="1k" x="40.64" y="22.86" smashed="yes" rot="R270">
-<attribute name="NAME" x="41.275" y="23.495" size="1.27" layer="25" rot="R270"/>
+<element name="R12" library="resistor" package="R0603" value="1k" x="40.64" y="22.86" smashed="yes" rot="R90">
+<attribute name="NAME" x="40.005" y="22.225" size="1.27" layer="25" rot="R90"/>
 </element>
 <element name="R13" library="resistor" package="R0603" value="10K" x="45.72" y="39.37" smashed="yes" rot="R90">
 <attribute name="NAME" x="45.085" y="38.735" size="1.27" layer="25" rot="R90"/>
@@ -1783,8 +1808,8 @@ design rules under a new name.
 <element name="R11" library="resistor" package="R0603" value="10k" x="43.18" y="22.86" smashed="yes" rot="R90">
 <attribute name="NAME" x="42.545" y="22.225" size="1.27" layer="25" rot="R90"/>
 </element>
-<element name="R6" library="resistor" package="R0603" value="1k" x="40.64" y="7.62" smashed="yes" rot="R270">
-<attribute name="NAME" x="41.275" y="8.255" size="1.27" layer="25" rot="R270"/>
+<element name="R6" library="resistor" package="R0603" value="1k" x="40.64" y="7.62" smashed="yes" rot="R90">
+<attribute name="NAME" x="40.005" y="6.985" size="1.27" layer="25" rot="R90"/>
 </element>
 <element name="U$1" library="Curie Nano" package="CURIENANO" value="CURIENANO_BREAKOUT" x="33.02" y="5.08"/>
 <element name="S1" library="switch" package="320-916" value="" x="62.23" y="45.72" smashed="yes" rot="R180">
@@ -1887,18 +1912,12 @@ design rules under a new name.
 <contactref element="LIPO" pad="PIN1-LEAD"/>
 <contactref element="14V8" pad="1"/>
 <contactref element="3V7" pad="1"/>
-<polygon width="0.1524" layer="16" isolate="0.254">
-<vertex x="21.59" y="58.42"/>
-<vertex x="21.59" y="1.27"/>
-<vertex x="67.31" y="1.27"/>
-<vertex x="67.31" y="58.42"/>
-</polygon>
-<wire x1="46.863" y1="48.895" x2="46.863" y2="54.229" width="0" layer="19" extent="16-16"/>
-<wire x1="39.37" y1="52.07" x2="46.863" y2="48.895" width="0" layer="19" extent="1-1"/>
+<wire x1="46.863" y1="50.8" x2="46.863" y2="56.134" width="0" layer="19" extent="16-16"/>
+<wire x1="39.37" y1="52.07" x2="46.863" y2="50.8" width="0" layer="19" extent="1-1"/>
 <wire x1="30.48" y1="52.07" x2="39.37" y2="52.07" width="0" layer="19" extent="1-1"/>
 <wire x1="24.13" y1="45.72" x2="30.48" y2="52.07" width="0" layer="19" extent="1-1"/>
 <wire x1="24.13" y1="36.83" x2="24.13" y2="45.72" width="0" layer="19" extent="1-1"/>
-<wire x1="45.72" y1="33.44" x2="46.863" y2="48.895" width="0" layer="19" extent="1-1"/>
+<wire x1="45.72" y1="33.44" x2="46.863" y2="50.8" width="0" layer="19" extent="1-1"/>
 <wire x1="45.72" y1="22.01" x2="45.72" y2="33.44" width="0" layer="19" extent="1-1"/>
 <wire x1="43.18" y1="22.01" x2="45.72" y2="22.01" width="0" layer="19" extent="1-1"/>
 <wire x1="45.72" y1="16.93" x2="45.72" y2="22.01" width="0" layer="19" extent="1-1"/>
@@ -1944,8 +1963,8 @@ design rules under a new name.
 <contactref element="C8" pad="1"/>
 <contactref element="R12" pad="1"/>
 <wire x1="43.18" y1="23.71" x2="45.72" y2="23.71" width="0" layer="19" extent="1-1"/>
-<wire x1="40.64" y1="23.71" x2="43.18" y2="23.71" width="0" layer="19" extent="1-1"/>
-<wire x1="33.02" y1="25.4" x2="40.64" y2="23.71" width="0" layer="19" extent="1-1"/>
+<wire x1="40.64" y1="22.01" x2="43.18" y2="23.71" width="0" layer="19" extent="1-1"/>
+<wire x1="33.02" y1="25.4" x2="40.64" y2="22.01" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="WHEEL_P2">
 <contactref element="U$1" pad="D7"/>
@@ -1953,8 +1972,8 @@ design rules under a new name.
 <contactref element="C7" pad="1"/>
 <contactref element="R10" pad="1"/>
 <wire x1="43.18" y1="18.63" x2="45.72" y2="18.63" width="0" layer="19" extent="1-1"/>
-<wire x1="40.64" y1="18.63" x2="43.18" y2="18.63" width="0" layer="19" extent="1-1"/>
-<wire x1="33.02" y1="22.86" x2="40.64" y2="18.63" width="0" layer="19" extent="1-1"/>
+<wire x1="40.64" y1="16.93" x2="43.18" y2="18.63" width="0" layer="19" extent="1-1"/>
+<wire x1="33.02" y1="22.86" x2="40.64" y2="16.93" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="WHEEL_P1">
 <contactref element="U$1" pad="~D6"/>
@@ -1962,8 +1981,8 @@ design rules under a new name.
 <contactref element="C6" pad="1"/>
 <contactref element="R8" pad="1"/>
 <wire x1="43.18" y1="13.55" x2="45.72" y2="13.55" width="0" layer="19" extent="1-1"/>
-<wire x1="40.64" y1="13.55" x2="43.18" y2="13.55" width="0" layer="19" extent="1-1"/>
-<wire x1="33.02" y1="20.32" x2="40.64" y2="13.55" width="0" layer="19" extent="1-1"/>
+<wire x1="40.64" y1="11.85" x2="43.18" y2="13.55" width="0" layer="19" extent="1-1"/>
+<wire x1="33.02" y1="20.32" x2="40.64" y2="11.85" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="STEERING_P">
 <contactref element="U$1" pad="~D5"/>
@@ -1971,28 +1990,28 @@ design rules under a new name.
 <contactref element="C5" pad="1"/>
 <contactref element="R6" pad="1"/>
 <wire x1="43.18" y1="8.47" x2="45.72" y2="8.47" width="0" layer="19" extent="1-1"/>
-<wire x1="40.64" y1="8.47" x2="43.18" y2="8.47" width="0" layer="19" extent="1-1"/>
-<wire x1="33.02" y1="17.78" x2="40.64" y2="8.47" width="0" layer="19" extent="1-1"/>
+<wire x1="40.64" y1="6.77" x2="43.18" y2="8.47" width="0" layer="19" extent="1-1"/>
+<wire x1="33.02" y1="17.78" x2="40.64" y2="6.77" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$1">
 <contactref element="STEER" pad="1"/>
 <contactref element="R6" pad="2"/>
-<wire x1="24.13" y1="8.89" x2="40.64" y2="6.77" width="0" layer="19" extent="1-1"/>
+<wire x1="24.13" y1="8.89" x2="40.64" y2="8.47" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$2">
 <contactref element="WHL1" pad="1"/>
 <contactref element="R8" pad="2"/>
-<wire x1="24.13" y1="15.24" x2="40.64" y2="11.85" width="0" layer="19" extent="1-1"/>
+<wire x1="24.13" y1="15.24" x2="40.64" y2="13.55" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
 <contactref element="WHL2" pad="1"/>
 <contactref element="R10" pad="2"/>
-<wire x1="24.13" y1="21.59" x2="40.64" y2="16.93" width="0" layer="19" extent="1-1"/>
+<wire x1="24.13" y1="21.59" x2="40.64" y2="18.63" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$4">
 <contactref element="WHL3" pad="1"/>
 <contactref element="R12" pad="2"/>
-<wire x1="24.13" y1="27.94" x2="40.64" y2="22.01" width="0" layer="19" extent="1-1"/>
+<wire x1="24.13" y1="27.94" x2="40.64" y2="23.71" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="14V8">
 <contactref element="BS1" pad="1"/>
@@ -2020,8 +2039,8 @@ design rules under a new name.
 <contactref element="LIPO" pad="PIN2"/>
 <contactref element="LIPO" pad="PIN2-LEAD"/>
 <contactref element="S1" pad="2"/>
-<wire x1="54.737" y1="48.895" x2="54.737" y2="54.229" width="0" layer="19" extent="16-16"/>
-<wire x1="62.23" y1="45.72" x2="54.737" y2="48.895" width="0" layer="19" extent="1-1"/>
+<wire x1="54.737" y1="50.8" x2="54.737" y2="56.134" width="0" layer="19" extent="16-16"/>
+<wire x1="62.23" y1="45.72" x2="54.737" y2="50.8" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>

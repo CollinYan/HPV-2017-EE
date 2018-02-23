@@ -1,14 +1,15 @@
-#include <WheelSpeed.h>
-#include <Wire.h>
+#include "WheelSpeed.h"
+#include "CurieTimerOne.h"
 
 const int16_t frontSensorPin = 12;                    //digitalRead pin
 const int16_t rearSensorPin = 13;                     //digitalRead pin
-int frontRollout = 2136;                              //circumference of front wheel in mm
-int rearRollout = 2136;                               //circumference of rear wheel in mm
-int frontMag = 8;                                     //# of magnets on front wheel
-int rearMag = 8;                                      //# of magnets on front wheel
-int minSpeed = 5;                                     //minSpeed in mph
-int freq = 4e3;                                       //need to set this value in setup() for Timer2
+const int frontRollout = 2136;                              //circumference of front wheel in mm
+const int rearRollout = 2136;                               //circumference of rear wheel in mm
+const int frontMag = 8;                                     //# of magnets on front wheel
+const int rearMag = 8;                                      //# of magnets on front wheel
+const int minSpeed = 5;                                     //minSpeed in mph
+const int freq = 4e3;                                       //need to set this value in setup() for Timer2
+int timePeriod = 10000;               // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
 const int maxSpeed = 60;                              //normalize integer speed values sent over I2C to maxSpeed(mph)
 
 /* maxTime in ms //minSpeed = frontRollout/frontMag / frontMaxTime * 1e-6km/mm / (1.6km/mi) * 3600s/h
@@ -19,8 +20,8 @@ const int maxSpeed = 60;                              //normalize integer speed 
 int frontMaxTime = (float)frontRollout/frontMag*1e-6 / 1.6 * 3600 / minSpeed * 1000; 
 int rearMaxTime = (float)frontMaxTime*frontMag/rearMag;                              
                                     
-volatile WheelSpeed frontWheel(frontSensorPin, frontRollout, frontMag, frontMaxTime, freq);
-volatile WheelSpeed rearWheel(rearSensorPin, rearRollout, rearMag, rearMaxTime, freq); 
+WheelSpeed frontWheel(frontSensorPin, frontRollout, frontMag, frontMaxTime, freq);
+WheelSpeed rearWheel(rearSensorPin, rearRollout, rearMag, rearMaxTime, freq); 
 
 int rearSpeed1024;
 int frontSpeed1024;
@@ -31,13 +32,7 @@ void setup() {
   Serial.begin(9600);                               //DEBUG ONLY
   Serial.println(frontMaxTime);
   Serial.println(rearMaxTime);
-  setupTimer2();
-
-  
-
-  //Start I2C communication with master
-  Wire.begin(8);                                      // join i2c bus with address #8
-  Wire.onRequest(requestEvent);                       // register event`
+  CurieTimerOne.start(timePeriod, &timedWheelMagnetISR);  // will run timedUpdateSpeed interrupt every .001 seconds
 }
 
 void loop() {

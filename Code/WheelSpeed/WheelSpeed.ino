@@ -57,12 +57,12 @@ void loop() {
     Serial.println();
     */
   }
-  if (frontWheel.sensorRead()) {
+  if (frontWheel.interrupted) {
     frontWheel.updateSpeed();
     frontSpeed1024 = 1024*frontWheel.mph / maxSpeed;    //Convert mph(float) to an integer, normalized to maxSpeed
     frontRearSpeed[0] = frontSpeed1024;                 //Set Data
   }
-  if (rearWheel.sensorRead()) {
+  if (rearWheel.interrupted) {
     rearWheel.updateSpeed();
     rearSpeed1024 = 1024*rearWheel.mph / maxSpeed;
     frontRearSpeed[1] = rearSpeed1024;

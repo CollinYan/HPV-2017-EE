@@ -24,7 +24,6 @@ class WheelSpeed {
   float _rollout;               // the rollout of the wheel in millimeters; 2136mm for 28-622 tire; 1490mm for 40-406 tires;
   int _freq;                    // polling freq for sensor value
 
-  int _debounceTimeC;           // time allowed for bouncing at edges in 100microseconds
   int _tDown1;                   // time of falling edge of 1st pulse
   int _tUp2;                     // time of rising edge of 2nd pulse
   int _tDown2;                   // time of falling edge of 2nd pulse
@@ -32,6 +31,11 @@ class WheelSpeed {
   int _maxTimeC;                // max cycles between rising edges
   int _magnets;                 // number of equally spaced magnets on the wheel
   volatile int _reedValOld;      // the previous reed position
+  void updateCloseToOpen();
+  void updateStuck();
+  void updateOpenShort();
+  void updateOpenToClose();
+  void updateClosedShort();
 };
 
 #endif

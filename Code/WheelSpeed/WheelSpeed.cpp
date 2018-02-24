@@ -7,76 +7,43 @@
 #include "Arduino.h"
 #include "WheelSpeed.h"
 
-WheelSpeed::WheelSpeed(int tireRollout, int numMagnets, int maxTime, int freq) {  
-  _timer = 0;
-  _tDown1 = 0;                
+WheelSpeed::WheelSpeed(int tireRollout, int numMagnets, int minSpeed) {  
+  _recent = 0;
+  _tUp1 = 0;                
   _tUp2 = 0;
-  _tDown2 = 0;  
-  Serial.println( "calc maxtimec");
 
-  interrupted = false;
+  _interruptedUp = false;
   _mph = 0;
-  numPulses=0;
-  
-  _milesPerMagnetMicrosecondsPerHour = (float)_rollout / 1e6 / 1.60934 / _magnets * 1e6 * 60 * 60;
+  _numPulses=0;
+
+  _milesPerMagnetMicrosecondsPerHour = (float) tireRollout / 1e6 / 1.60934 / numMagnets * 1e6 * 60 * 60;
+  _maxTime = _milesPerMagnetMicrosecondsPerHour / minSpeed;
   _centerToCenter = 0;
 }
 
 void WheelSpeed::readTimeUp() {
+  _tUp1 = _tUp2;
   _tUp2 = micros();
-  interruptedUp = true;
+  _interruptedUp = true;
 }
-void WheelSpeed::readTimeDown() {
-  _tDown2 = micros()
-  interruptedDown = true;
-}
+
 
 float WheelSpeed::updateSpeed() {
   //update speed of this wheel
-  if (interruptedDown) {
-    calcSpeed();
-    _tUp1 = _tUp2;
-    _tDown1 = _tDown2;
-    _recent = _tDown2;
-    interruptedDown = false;
-  } else if (interruptedUp) {
+  if (_interruptedUp) {
     _recent = _tUp2;
-    interruptedUp = false;
+    calcSpeed();
+    _numPulses += 1;
+    _interruptedUp = false;
   }
   if (micros()-_recent > _maxTime) {
     _mph = 0;
   }
-  return mph;
+  return _mph;
 }
 
 void WheelSpeed::calcSpeed() {
-  _centerToCenter = (_tUp2 - _tUp1 + _tDown2 - _tDown1) /2;
-  mph = milesPerMagnetMicrosecondsPerHour / _centerToCenter;
-  debug = String("went from closed to open and done bouncing");
-  _timer += 1;
-}
-
-void WheelSpeed::updateStuck() {
-  mph = 0;
-  debug = String("open or close for greater than _maxTime");
-  debug += _maxTimeC;
-}
-
-void WheelSpeed::updateOpenShort() {
-  _timer += 1;
-  debug = String("still open");
-  //debug += _timer;
-}
-
-void WheelSpeed::updateOpenToClose() {
-  _tUp2 = _timer;
-  _reedValOld = _reedValCur;
-  debug = String("went from open to closed and done bouncing");
-  _timer += 1;
-}
-
-void WheelSpeed::updateClosedShort() {
-  _timer += 1;
-  debug = String("still closed");
+  _centerToCenter = _tUp2 - _tUp1;
+  _mph = _milesPerMagnetMicrosecondsPerHour / _centerToCenter;
 }
 

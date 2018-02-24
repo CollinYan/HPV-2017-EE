@@ -1,5 +1,10 @@
-void timedWheelMagnetISR() {
-  rearWheel.readSensor();
-  frontWheel.readSensor();
-  interruptCount += 1;
+void wheel1UpISR() {
+  wheel1.readTimeUp();
 }
+void wheel2UpISR() {
+  wheel2.readTimeUp();
+}
+void wheel3UpISR() {
+  wheel3.readTimeUp();
+}
+

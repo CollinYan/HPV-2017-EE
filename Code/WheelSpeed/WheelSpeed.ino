@@ -1,8 +1,9 @@
 #include "WheelSpeed.h"
 #include "CurieTimerOne.h"
 
-const int16_t frontSensorPin = 12;                    //digitalRead pin
-const int16_t rearSensorPin = 13;                     //digitalRead pin
+const int16_t wheel1Pin = 6;                    //digitalRead pin
+const int16_t wheel2Pin = 7;                     //digitalRead pin
+const int16_t wheel2Pin = 8;                     //digitalRead pin
 const int frontRollout = 2136;                              //circumference of front wheel in mm
 const int rearRollout = 2136;                               //circumference of rear wheel in mm
 const int frontMag = 8;                                     //# of magnets on front wheel
@@ -32,7 +33,12 @@ void setup() {
   Serial.begin(9600);                               //DEBUG ONLY
   Serial.println(frontMaxTime);
   Serial.println(rearMaxTime);
-  CurieTimerOne.start(timePeriod, &timedWheelMagnetISR);  // will run timedUpdateSpeed interrupt every .001 seconds
+  attachInterrupt(digitalPinToInterrupt(wheel1Pin), wheel1UpISR, RISING);
+  attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2UpISR, RISING);
+  attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
+  attachInterrupt(digitalPinToInterrupt(wheel1Pin), wheel1DownISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2DownISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3DownISR, FALLING);
 }
 
 void loop() {

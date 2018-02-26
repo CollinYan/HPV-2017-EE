@@ -6,18 +6,20 @@
 #define SERIAL_PORT_LOG_ENABLE 1
 
 /*pins*/
-const int batteryPin = A5;    // Battery voltage divided down by 10
+const int batteryPin = A4;    // Battery voltage divided down by 10
 const int brakePin1 = A0;     // Braking input: ranges from min value to max value, should convert to servo value 0-180 deg
 const int brakePin2 = A1;     // Braking input: ranges from min value to max value, should convert to servo value 0-180 deg
-const int tiltPin = A2;       // Tilt lever input: ranges from the same values as potpin
-const int brakePWMPin1 = 5;   // Output to the brake servo for one wheel
-const int brakePWMPin2 = 6;   // Output to the brake servo for the second wheel 
-const int tiltPWMPin = 7;     // Output to the tilt lock servo
+const int brakePin3 = A2;
+const int tiltPin = A3;       // Tilt lever input: ranges from the same values as potpin
+const int brakePWMPin1 = 9;   // Output to the brake servo for front wheel
+const int brakePWMPin2 = 10;   // Output to the brake servo for rear left wheel 
+const int brakePWMPin3 = 11;   // Output to the brake servo for rear right wheel 
+const int tiltPWMPin = 12;     // Output to the tilt lock servo
 
 /*Timing*/
 const int periodBrakeRead = 10;             //period of brake input interrupt reading in ms
 boolean leverReadTicked = 0;                //keep track of whether brake was read
-const int periodServoWrite = 100;
+const int periodServoWrite = 50;
 boolean servoWriteTicked = 0;                //keep track of whether brake was read
 
 /*battery*/

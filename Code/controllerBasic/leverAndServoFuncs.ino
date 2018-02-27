@@ -5,7 +5,9 @@ void readLever() {
     /*brake 1*/
     brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
     brakeServoOutput1 = convertToServo(brakeRead1);
-    brakeServoOutputProcessed1 = brakeLock1.processParkingLock(brakeServoOutput1);
+    if (wheel2._mph < 1) {
+      brakeServoOutputProcessed1 = brakeLock1.processParkingLock(brakeServoOutput1);
+    }
     /*tilt*/
     tiltRead = smoothedTilt.analogReadSmooth(tiltPin);
     tiltServoOutput = convertToServo(tiltRead);

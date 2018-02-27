@@ -1,7 +1,6 @@
 /*
-  AnalogSmooth.cpp - Library to smooth analog signal 
-  jitter by averaging concurrent readings.
-  Created by Michael Thessel.
+  ParkingLock.cpp - Library to lock brakes given lever being held down
+  Created by Harrison Hsueh.
 */
 #include "Arduino.h"
 #include "ParkingLock.h"

@@ -1,5 +1,8 @@
 #include "WheelSpeed.h"
 
+unsigned long start_time = 0;
+unsigned long end_time = 0;
+
 const int16_t wheel1Pin = 6;                    //digitalRead pin
 const int16_t wheel2Pin = 7;                     //digitalRead pin
 const int16_t wheel3Pin = 8;                     //digitalRead pin
@@ -10,7 +13,7 @@ const int magnets1 = 8;                                     //# of magnets on fr
 const int magnets2 = 8;                                      //# of magnets on rear left wheel
 const int magnets3 = 8;                                      //# of magnets on rear right wheel
 const int minSpeed = 5;                                     //minSpeed in mph
-                                                       
+
 WheelSpeed wheel1(rollout1, magnets1, minSpeed);
 WheelSpeed wheel2(rollout2, magnets2, minSpeed); 
 WheelSpeed wheel3(rollout2, magnets3, minSpeed); 
@@ -27,7 +30,20 @@ void loop() {
     wheel1.updateSpeed();
   }
   if (wheel2._interruptedUp) {  
+    noInterrupts();
+    start_time = micros();
     wheel2.updateSpeed();
+    end_time = micros();
+    Serial.print("Start time: ");
+    Serial.println(start_time);
+    Serial.print("End time: ");
+    Serial.println(end_time);
+    Serial.print("Elapsed time: ");
+    Serial.println(end_time - start_time);
+    interrupts();
+    while(1); 
+    
+  
     //Serial.println(wheel2._mph);                   //DEBEUG ONLY  
   }
   if (wheel3._interruptedUp) {

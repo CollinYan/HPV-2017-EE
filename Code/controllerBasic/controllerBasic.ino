@@ -3,8 +3,12 @@
 #include "ParkingLock.h"
 #include "WheelSpeed.h"
 
+
 // Comment the following statement to disable logging on serial port.
 #define SERIAL_PORT_LOG_ENABLE 1
+
+unsigned long start_time = 0;
+unsigned long end_time = 0;
 
 /*pins*/
 const int batteryPin = A4;    // Battery voltage divided down by 10
@@ -86,6 +90,7 @@ void setup() {
 }
 
 void loop() {
+  start_time = micros();
   checkBat(); //checks battery voltage and sets batteryGood
   if (batteryGood) {
     readLever();  
@@ -93,4 +98,11 @@ void loop() {
     accelSpeed();
     brake();
   }
+  end_time = micros();
+  Serial.print("Start time: ");
+  Serial.println(start_time);
+  Serial.print("End time: ");
+  Serial.println(end_time);
+  Serial.print("Elapsed time: ");
+  Serial.println(end_time - start_time);
 }

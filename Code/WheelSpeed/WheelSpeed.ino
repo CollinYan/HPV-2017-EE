@@ -10,7 +10,7 @@ const int magnets1 = 8;                                     //# of magnets on fr
 const int magnets2 = 8;                                      //# of magnets on rear left wheel
 const int magnets3 = 8;                                      //# of magnets on rear right wheel
 const int minSpeed = 5;                                     //minSpeed in mph
-                                                       
+
 WheelSpeed wheel1(rollout1, magnets1, minSpeed);
 WheelSpeed wheel2(rollout2, magnets2, minSpeed); 
 WheelSpeed wheel3(rollout2, magnets3, minSpeed); 

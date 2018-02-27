@@ -11,6 +11,7 @@ WheelSpeed::WheelSpeed(int tireRollout, int numMagnets, int minSpeed) {
   _recent = 0;
   _tUp1 = 0;                
   _tUp2 = 0;
+  _tUpStore = 0;
 
   _interruptedUp = false;
   _mph = 0;
@@ -19,11 +20,12 @@ WheelSpeed::WheelSpeed(int tireRollout, int numMagnets, int minSpeed) {
   _milesPerMagnetMicrosecondsPerHour = (float) tireRollout / 1e6 / 1.60934 / numMagnets * 1e6 * 60 * 60;
   _maxTime = _milesPerMagnetMicrosecondsPerHour / minSpeed;
   _centerToCenter = 0;
+  _minTime = 2000;
 }
 
 void WheelSpeed::readTimeUp() {
   _tUp1 = _tUp2;
-  _tUp2 = micros();
+  _tUpStore = micros();
   _interruptedUp = true;
 }
 
@@ -31,15 +33,26 @@ void WheelSpeed::readTimeUp() {
 float WheelSpeed::updateSpeed() {
   //update speed of this wheel
   if (_interruptedUp) {
-    _recent = _tUp2;
-    calcSpeed();
-    _numPulses += 1;
-    _interruptedUp = false;
-  }
-  if (micros()-_recent > _maxTime) {
-    _mph = 0;
+    if (_tUpStore - _tUp2 < _minTime) {
+      _tUp2 = _tUp1;
+    } else {
+      _recent = _tUpStore;
+      _tUp1 = _tUp2;
+      _tUp2 = _tUpStore;
+      calcSpeed();
+      _numPulses += 1;
+    }
+    _interruptedUp = false;  
   }
   return _mph;
+}
+
+bool WheelSpeed::zeroMPH() {
+  if (micros()-_recent > _maxTime) {
+    _mph = 0;
+    return true;
+  }
+  return false;
 }
 
 void WheelSpeed::calcSpeed() {

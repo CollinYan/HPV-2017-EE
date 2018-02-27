@@ -26,19 +26,26 @@ void loop() {
   if (wheel1._interruptedUp) {
     wheel1.updateSpeed();
   }
-  if (wheel2._interruptedUp) {
+  if (wheel2._interruptedUp) {  
     wheel2.updateSpeed();
+    Serial.print(wheel2._mph);                   //DEBEUG ONLY  
+    Serial.print("\t");
+    Serial.println();
   }
   if (wheel3._interruptedUp) {
-    wheel2.updateSpeed();
+    wheel3.updateSpeed();
   }
-
-  if (millis() % 100 == 0) {
-    Serial.print(wheel2._numPulses);
+  if (millis() % (wheel2._maxTime/2000) == 0) {
+    wheel2.zeroMPH();
+  }
+  /*
+  if (millis() % 50 == 0) {
+    Serial.print(wheel2._numPulses%20);
     Serial.print("\t");
     Serial.print(wheel2._mph);                   //DEBEUG ONLY  
     Serial.print("\t");
     Serial.println();
   }
+  */
 }
 

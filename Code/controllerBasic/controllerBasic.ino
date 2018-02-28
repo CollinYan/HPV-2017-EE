@@ -31,7 +31,7 @@ const int periodServoWrite = 50;
 boolean servoWriteTicked = 0;                //keep track of whether brake was read
 
 /*battery*/
-const int batteryVoltageCutoff = 3.6*4/3.3*1023/10;  // 
+const int batteryVoltageCutoff = 3.6*4/3.3*1023/9.18;  // 
 int batteryVoltage;
 bool batteryGood;
 
@@ -40,7 +40,7 @@ const int minValue = 2.380 * 1023/3.3;      //1.1V to 1.2V or 2.38V to 2.93V dep
 const int maxValue = 2.930 * 1023/3.3;
 const int minHighTime = 800;                //min High time for PWM to servo, according to specs
 const int maxHighTime = 2200;               //max High time for PWM to servo, according to specs
-const int minServoRange = 100;              //0 degrees would output minHighTime
+const int minServoRange = 90;              //0 degrees would output minHighTime
 const int maxServoRange = 175;              //180 degrees would ouput maxHighTime
 float brakeRead1;                     // value read in from brake lever after being smoothed
 float tiltRead;                             // value read in from tilt lever after being smoothed

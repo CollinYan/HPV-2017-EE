@@ -32,9 +32,15 @@ void WheelSpeed::updateSpeed() {
   //update speed of this wheel
   if (_interruptedUp && !(_tUp2 - _tUp1 < _minTime)) {
     _recent = _tUp2;
+    Serial.print(_tUp2-_tUp1);
+    Serial.println("calcing");
     calcSpeed();
     _tUp1 = _tUp2;    
     _numPulses += 1;
+  } else {
+    Serial.print(_tUp2);
+    Serial.print(_tUp2-_tUp1);
+    Serial.println("bouncing");
   }
   _interruptedUp = false;  
 }
@@ -42,6 +48,7 @@ void WheelSpeed::updateSpeed() {
 bool WheelSpeed::zeroMPH() {
   if (micros()-_recent > _maxTime) {
     _mphX10 = 0;
+    Serial.println("zeroed");
     return true;
   }
   return false;
@@ -49,6 +56,8 @@ bool WheelSpeed::zeroMPH() {
 
 void WheelSpeed::calcSpeed() {
   _centerToCenter = _tUp2 - _tUp1;
+  Serial.print(_centerToCenter);
+  Serial.println(_milesDiv100PerMagnetMicrosecondsPerHour);
   _mphX10 = _milesDiv100PerMagnetMicrosecondsPerHour / _centerToCenter;
 }
 

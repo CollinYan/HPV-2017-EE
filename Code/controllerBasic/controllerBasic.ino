@@ -90,7 +90,7 @@ void setup() {
 }
 
 void loop() {
-  start_time = micros();
+  //start_time = micros();
   checkBat(); //checks battery voltage and sets batteryGood
   if (batteryGood) {
     readLever();  
@@ -98,6 +98,7 @@ void loop() {
     accelSpeed();
     brake();
   }
+  /*
   end_time = micros();
   Serial.print("Start time: ");
   Serial.println(start_time);
@@ -105,4 +106,6 @@ void loop() {
   Serial.println(end_time);
   Serial.print("Elapsed time: ");
   Serial.println(end_time - start_time);
+  */
 }
+

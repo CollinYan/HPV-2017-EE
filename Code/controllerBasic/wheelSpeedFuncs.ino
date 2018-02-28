@@ -5,7 +5,6 @@ void wheelSpeed() {
   }
   if (wheel2._interruptedUp) {  
     wheel2.updateSpeed();
-    //Serial.println(wheel2._mph);                   //DEBEUG ONLY  
   }
   if (wheel3._interruptedUp) {
     wheel3.updateSpeed();
@@ -27,3 +26,4 @@ void wheel2UpISR() {
 void wheel3UpISR() {
   wheel3.readTimeUp();
 }
+

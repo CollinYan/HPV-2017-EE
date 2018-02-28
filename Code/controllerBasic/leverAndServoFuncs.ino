@@ -1,11 +1,11 @@
 /*100Hz*/
 void readLever() {
   /*This loop is entered once every 'periodBrakeRead' milliseconds, given that the rest of the program doesn't take too long*/
-  if (!(millis()%periodBrakeRead) && !leverReadTicked) {         
+  if (!((millis()*2/periodBrakeRead)%2) && !leverReadTicked) {         
     /*brake 1*/
     brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
     brakeServoOutput1 = convertToServo(brakeRead1);
-    if (wheel2._mph < 1) {
+    if (wheel2._mphX10 < 1) {
       brakeServoOutputProcessed1 = brakeLock1.processParkingLock(brakeServoOutput1);
     }
     /*tilt*/
@@ -58,3 +58,4 @@ int convertToServo(float brakeIn) {
 
 
   
+

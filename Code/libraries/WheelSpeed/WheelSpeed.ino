@@ -28,7 +28,7 @@ void loop() {
   }
   if (wheel2._interruptedUp) {  
     wheel2.updateSpeed();
-    //Serial.println(wheel2._mph);                   //DEBEUG ONLY  
+    Serial.println(wheel2._mphX10);                   //DEBEUG ONLY  
   }
   if (wheel3._interruptedUp) {
     wheel3.updateSpeed();

@@ -1,7 +1,6 @@
 #include "AccelSpeed.h"
 #include "Arduino.h"
 #include <CurieIMU.h>
-#include <MadgwickAHRS.h>
 
 AccelSpeed::AccelSpeed(int freq) {
   CurieIMU.begin();                     // initialize curie
@@ -9,7 +8,9 @@ AccelSpeed::AccelSpeed(int freq) {
 
   // Set the accelerometer range to 2G
   CurieIMU.setAccelerometerRange(2);
-
+  CurieIMU.autoCalibrateAccelerometerOffset(X_AXIS, 0);
+  CurieIMU.autoCalibrateAccelerometerOffset(Y_AXIS, 0);
+  CurieIMU.autoCalibrateAccelerometerOffset(Z_AXIS, 1);
   _vehicleSpeed = 0;                     //HH temporary initialize to 0
   _freq = freq;                         //HH setting our private variable
 }
@@ -24,6 +25,7 @@ void AccelSpeed::setAccel() {
 void AccelSpeed::updateSpeed(int wheelSpeed, boolean braking) {
   if (!braking) {
     _vehicleSpeed = wheelSpeed;  // no brakes -> vehicles speed is same as wheels
+    _vehicleDist = 0;
     _brakeTime = 0;
   }
   else if (braking) {
@@ -35,4 +37,5 @@ void AccelSpeed::updateSpeed(int wheelSpeed, boolean braking) {
   _vehicleSpeed += _aix / _freq;  //  calculate vehicleSpeed based on acceleration //HH: changed from a * (1/f) to a/f since 1/f=0
   _interrupted = false; 
 }
+
 

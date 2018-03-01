@@ -1,6 +1,9 @@
 #include "AccelSpeed.h"
 #include "CurieTimerOne.h"
 
+unsigned long start_time = 0;
+unsigned long end_time = 0;
+
 const int timePeriod = 10000;               // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
 AccelSpeed myAccelSpeed(100);         // create AccelSpeed object with some frequency //change to 100Hz
 
@@ -13,8 +16,9 @@ void timedUpdateSpeedISR() {
 }
 
 void setup() {
+  
   CurieTimerOne.start(timePeriod, &timedUpdateSpeedISR);  // will run timedUpdateSpeed interrupt every .01 seconds
-  Serial.begin(9600);                                     //debugging with Serial prints
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -28,6 +32,7 @@ void loop() {
     myAccelSpeed.updateSpeed(0, braking);    // placeholders for wheelspeed and braking
   }
   
+  
   if ((millis()/(1000*resetDuration))%(resetPeriod/resetDuration)==0) {
     braking = false;
   }
@@ -35,4 +40,5 @@ void loop() {
     braking = true;
   }
 }
+
 

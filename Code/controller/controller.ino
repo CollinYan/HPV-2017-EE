@@ -2,6 +2,8 @@
 #include "AnalogSmoothInt.h"
 #include "ParkingLock.h"
 #include "WheelSpeed.h"
+#include "AccelSpeed.h"
+#include "CurieTimerOne.h"
 
 
 // Comment the following statement to disable logging on serial port.
@@ -76,6 +78,20 @@ WheelSpeed wheel1(rollout1, magnets1, minSpeed);
 WheelSpeed wheel2(rollout2, magnets2, minSpeed); 
 WheelSpeed wheel3(rollout2, magnets3, minSpeed); 
 
+/* Accel Speed */
+const int freq = 100;
+// unsigned long start_time = 0;  already initialized?
+// unsigned long end_time = 0;
+
+const int timePeriod = 10000;          // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
+AccelSpeed myAccelSpeed(freq);         // create AccelSpeed object with some frequency //change to 100Hz
+
+int resetPeriod = 10;     // reset period in seconds
+int resetDuration = 1;    // reset duration in seconds
+boolean braking = true;
+
+
+
 void setup() {  
   brakeServo1.attach(brakePWMPin1,minHighTime,maxHighTime);
   tiltServo.attach(tiltPWMPin,minHighTime,maxHighTime);  
@@ -84,6 +100,8 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(wheel1Pin), wheel1UpISR, RISING);
   attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2UpISR, RISING);
   attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
+  
+  CurieTimerOne.start(timePeriod, &timedUpdateSpeedISR);  // will run timedUpdateSpeed interrupt every .01 seconds
   
   Serial.begin(9600);
   Serial.println("-- initialized --");

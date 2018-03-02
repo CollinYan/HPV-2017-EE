@@ -16,7 +16,6 @@ void timedUpdateSpeedISR() {
 }
 
 void setup() {
-  
   CurieTimerOne.start(timePeriod, &timedUpdateSpeedISR);  // will run timedUpdateSpeed interrupt every .01 seconds
   Serial.begin(9600);
 }
@@ -31,7 +30,7 @@ void loop() {
   if (myAccelSpeed._interrupted) {
     myAccelSpeed.updateSpeed(0, braking);    // placeholders for wheelspeed and braking
   }
-    
+  
   
   if ((millis()/(1000*resetDuration))%(resetPeriod/resetDuration)==0) {
     braking = false;

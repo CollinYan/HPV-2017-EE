@@ -1,17 +1,12 @@
 #include "ABS.h"
 #include "Arduino.h"
 
-AccelSpeed::AccelSpeed(int freq) {
-  CurieIMU.begin();                     // initialize curie
-  CurieIMU.setAccelerometerRate(100);    //HH: might need to increase this value to 100Hz
-
-  // Set the accelerometer range to 2G
-  CurieIMU.setAccelerometerRange(2);
-  CurieIMU.autoCalibrateAccelerometerOffset(X_AXIS, 0);
-  CurieIMU.autoCalibrateAccelerometerOffset(Y_AXIS, 0);
-  CurieIMU.autoCalibrateAccelerometerOffset(Z_AXIS, 1);
-  _vehicleSpeed = 0;                     //HH temporary initialize to 0
-  _freq = freq;                         //HH setting our private variable
+ABS::ABS(int kP, int kI, int kD, int maxSlip) {
+  int _absBrakeOutput;
+    int _slip;            // percent slip, should be around 5% to 20%
+  
+  private:
+    int _absBrakeOutput;
 }
 
 void AccelSpeed::setAccel() {

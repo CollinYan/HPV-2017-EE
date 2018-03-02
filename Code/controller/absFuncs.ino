@@ -1,6 +1,6 @@
 /*called by brake which is 10Hz*/
 void antiLockBrake() {
-  
+  antiLockBrake(myAccelSpeed._vehicleSpeedX10, wheel2._mphX10, 100, 100);
 }
 
 int antiLockBrake(float vehicleSpeed, float wheelSpeed, int desiredBrake, int absBrake) {

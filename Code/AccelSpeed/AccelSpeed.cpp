@@ -25,7 +25,6 @@ void AccelSpeed::setAccel() {
 void AccelSpeed::updateSpeed(int wheelSpeed, boolean braking) {
   if (!braking) {
     _vehicleSpeed = wheelSpeed;  // no brakes -> vehicles speed is same as wheels
-    _vehicleDist = 0;
     _brakeTime = 0;
   }
   else if (braking) {

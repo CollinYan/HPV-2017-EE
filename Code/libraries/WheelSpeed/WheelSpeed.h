@@ -17,18 +17,18 @@ class WheelSpeed {
   volatile bool _interruptedUp;             // variable for program to know whether speed needs updating
   int _mphX10;                    // speed in mph
   uint8_t _numPulses;                // for debugging
-  int _maxTime;                // max time between rising edges
+  unsigned int _maxTime;                // max time between rising edges
   
   private:
   /*miles per magnet times microseconds per hour, also mph*microsecond/magnet
     when divided by microseconds/magnet aka the time between pulses, the result is mph*/
-  unsigned int _milesDiv100PerMagnetMicrosecondsPerHour; 
+  unsigned int _milesDiv10PerMagnetMicrosecondsPerHour; 
   int _centerToCenter;
 
   int _minTime;
   volatile int _tUp1;
   volatile int _tUp2;                     // time of rising edge of 2nd pulse
-  int _recent;                   // time of most recent interrupt
+  unsigned int _recent;                   // time of most recent interrupt
   
   void calcSpeed();
 };

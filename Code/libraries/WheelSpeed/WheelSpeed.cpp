@@ -17,7 +17,7 @@ WheelSpeed::WheelSpeed(int tireRollout, int numMagnets, int minSpeed) {
   _numPulses=0;
 
   _milesDiv10PerMagnetMicrosecondsPerHour = (float) tireRollout / 1e6 / 1.60934 / numMagnets * 1e6 * 60 * 60 / 10;  // near max value for unsigned int, change Div10 to Divxx to not overflow if change this val
-  _maxTime = _milesDiv100PerMagnetMicrosecondsPerHour / minSpeed;
+  _maxTime = _milesDiv10PerMagnetMicrosecondsPerHour / minSpeed;
   _centerToCenter = 0;
   _minTime = 2000;
 }
@@ -57,7 +57,7 @@ bool WheelSpeed::zeroMPH() {
 void WheelSpeed::calcSpeed() {
   _centerToCenter = (_tUp2 - _tUp1)/100; //in 100microseconds, so we get mphX10 instead of just mph
   Serial.print(_centerToCenter);
-  Serial.println(_milesDiv100PerMagnetMicrosecondsPerHour);
-  _mphX10 = _milesDiv100PerMagnetMicrosecondsPerHour / _centerToCenter;
+  Serial.println(_milesDiv10PerMagnetMicrosecondsPerHour);
+  _mphX10 = _milesDiv10PerMagnetMicrosecondsPerHour / _centerToCenter;
 }
 

@@ -23,10 +23,10 @@ void setup() {
 
 void loop() {
   //Serial.print("velocity: ");
-  Serial.print(myAccelSpeed._vehicleSpeed);
-  Serial.print("\t");
+  //Serial.print((int)(myAccelSpeed._vehicleSpeed*22.4));
+  //Serial.print("\t");
   //Serial.print("accel: ");
-  Serial.println(myAccelSpeed._aix);
+  //Serial.println(myAccelSpeed._aix);
   
   if (myAccelSpeed._interrupted) {
     myAccelSpeed.updateSpeed(0, braking);    // placeholders for wheelspeed and braking

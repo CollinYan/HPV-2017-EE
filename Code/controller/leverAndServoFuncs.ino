@@ -17,9 +17,12 @@ void readLever() {
     tiltServoOutputProcessed = tiltLock.processParkingLock(tiltServoOutput);
 
     leverReadTicked = true;      
+    /*
     Serial.print(brakeServoOutput1); Serial.print("\t");
     Serial.print(brakeServoOutputProcessed1); Serial.print("\t");
+    */
     Serial.print(wheel2._mphX10); Serial.print("\t");
+    Serial.print((int)(myAccelSpeed._vehicleSpeed*22.4)); Serial.print("\t");
     Serial.println();
   } else if ((millis()*2/periodBrakeRead)%2) {
     leverReadTicked = false;

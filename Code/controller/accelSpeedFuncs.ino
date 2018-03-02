@@ -4,11 +4,10 @@ void accelSpeed() {
     myAccelSpeed.updateSpeed(wheel2._mphX10, braking);    // get wheelspeed from wheel 2
   }
   
-  Serial.print("accel's vehicle speed: ");
-  Serial.println(myAccelSpeed._vehicleSpeed);
-  Serial.print("\n");
-  Serial.print("accel: ");
-  Serial.println(myAccelSpeed._aix);
+  //Serial.print("accel's vehicle speed: ");
+
+  //Serial.print("accel: ");
+  //Serial.println(myAccelSpeed._aix);
   
   if ((millis() / (1000*resetDuration)) % (resetPeriod/resetDuration) == 0) {
     braking = false;

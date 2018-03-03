@@ -19,8 +19,8 @@ const int brakePin2 = A1;     // Braking input: ranges from min value to max val
 const int brakePin3 = A2;
 const int tiltPin = A3;       // Tilt lever input: ranges from the same values as potpin
 const int brakePWMPin1 = 9;   // Output to the brake servo for front wheel
-const int brakePWMPin2 = 10;   // Output to the brake servo for rear left wheel 
-const int brakePWMPin3 = 11;   // Output to the brake servo for rear right wheel 
+const int brakePWMPin2 = 10;   // Output to the brake servo for rear left wheel
+const int brakePWMPin3 = 11;   // Output to the brake servo for rear right wheel
 const int tiltPWMPin = 12;     // Output to the tilt lock servo
 const int16_t wheel1Pin = 6;                    //digitalRead pin
 const int16_t wheel2Pin = 7;                     //digitalRead pin
@@ -36,7 +36,7 @@ boolean accelReadTicked = 0;                //keep track of whether brake was re
 
 
 /*battery*/
-const int batteryVoltageCutoff = 3.6*4/3.3*1023/9.18;  // 
+const int batteryVoltageCutoff = 3.6*4/3.3*1023/9.18;  //
 int batteryVoltage;
 bool batteryGood;
 
@@ -81,15 +81,17 @@ const int magnets1 = 8;                                     //# of magnets on fr
 const int magnets2 = 8;                                      //# of magnets on rear left wheel
 const int magnets3 = 8;                                      //# of magnets on rear right wheel
 const int minSpeed = 1;                                     //minSpeed in mph
-                                                       
+
 WheelSpeed wheel1(rollout1, magnets1, minSpeed);
-WheelSpeed wheel2(rollout2, magnets2, minSpeed); 
-WheelSpeed wheel3(rollout2, magnets3, minSpeed); 
+WheelSpeed wheel2(rollout2, magnets2, minSpeed);
+WheelSpeed wheel3(rollout2, magnets3, minSpeed);
 
 /* Accel Speed */
 const int freq = 100;
+const int scale = 0.9;
 const int timePeriod = 10000;          // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
-AccelSpeed myAccelSpeed(freq);         // create AccelSpeed object with some frequency //change to 100Hz
+AccelSpeed myAccelSpeed(freq, scale);         // create AccelSpeed object with some frequency //change to 100Hz
+// 1 mi/h -> 100 , right now is m/s
 
 int resetPeriod = 10;     // reset period in seconds
 int resetDuration = 1;    // reset duration in seconds
@@ -103,17 +105,17 @@ AntiLockBrake absWheel2(kP, 99, 99, maxSlip, minServoRange);
 int absOutputWheel1;
 int absOutputWheel2;
 
-void setup() {  
+void setup() {
   brakeServo1.attach(brakePWMPin1,minHighTime,maxHighTime);
   brakeServo2.attach(brakePWMPin2,minHighTime,maxHighTime);
-  tiltServo.attach(tiltPWMPin,minHighTime,maxHighTime);  
+  tiltServo.attach(tiltPWMPin,minHighTime,maxHighTime);
 
   /*Wheel speed*/
   attachInterrupt(digitalPinToInterrupt(wheel1Pin), wheel1UpISR, RISING);
   attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2UpISR, RISING);
   attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
-  
-  
+
+
   Serial.begin(9600);
   Serial.println("-- initialized --");
 }
@@ -122,7 +124,7 @@ void loop() {
   //start_time = micros();
   checkBat(); //checks battery voltage and sets batteryGood
   if (batteryGood) {
-    readLever();  
+    readLever();
     wheelSpeed();
     accelSpeed();
     brake();
@@ -141,4 +143,3 @@ void loop() {
   Serial.println(end_time - start_time);
   */
 }
-

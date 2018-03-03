@@ -13,7 +13,7 @@ class AccelSpeed {
     void setAccel();         //HH: void since this function can just set the 'acceleration' variable for other functions to use
     volatile boolean _interrupted;      // set True when readAccel is called, set back to False after updating speed
     void updateSpeed(int wheelSpeed, boolean braking);  // function updating speed
-    float _vehicleSpeed;       // speed
+    float _mphX100;       // speed
     float _scale;
     volatile float _aix;
     volatile float _aiy;

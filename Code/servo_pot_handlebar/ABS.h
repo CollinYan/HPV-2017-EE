@@ -9,13 +9,17 @@
 
 class ABS {
   public:
-    int ABS(int kP, int kI, int kD, int maxSlip);
-    int processABS(int vehicleSpeedX10, int wheelSpeedX10, int desiredBrake);
-    int _absBrakeOutput;
+    int ABS(float kP, int kI, int kD, int maxSlip, int minBrake);
+    int processABS(int vehicleSpeedX100, int wheelSpeedX100, int desiredBrake);
     int _slip;            // percent slip, should be around 5% to 20%
   
   private:
-    int _absBrakeOutput;
+    float _kP;
+    int _maxslip
+    float _absBrakeOutput;
+    int _error;
+    int _minBrake;
+    
 };
 
 #endif

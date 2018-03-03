@@ -1,27 +1,24 @@
-/*continuous*/
-void accelSpeed() {  
+void accelSpeed() { 
+  /*100Hz*/
+  if (!((millis()*2/periodAccelRead)%2) && !accelReadTicked) {  //enters loop once every periodAccelRead        
+     myAccelSpeed.setAccel();
+     accelReadTicked = true;
+  } else if ((millis()*2/periodAccelRead)%2) {
+     accelReadTicked = false;
+  }
+
+  /*continuous*/
+  braking = brakeRead2 > (minValue+10);       //if lever is pressed enough, 10 out of approximately 90degrees of servo range
   if (myAccelSpeed._interrupted) {
     myAccelSpeed.updateSpeed(wheel2._mphX10, braking);    // get wheelspeed from wheel 2
   }
   
-  //Serial.print("accel's vehicle speed: ");
-
-  //Serial.print("accel: ");
-  //Serial.println(myAccelSpeed._aix);
-  
+  /*  
   if ((millis() / (1000*resetDuration)) % (resetPeriod/resetDuration) == 0) {
     braking = false;
-  }
-  else {
+  } else {
     braking = true;
-  }
+  }*/
 }
-
-/*100Hz*/
-
-void timedUpdateSpeedISR() {
-  myAccelSpeed.setAccel();
-}
-
 
 

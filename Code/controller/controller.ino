@@ -4,7 +4,7 @@
 #include "WheelSpeed.h"
 #include "AccelSpeed.h"
 #include "CurieTimerOne.h"
-
+#include "AntiLockBrake.h"
 
 // Comment the following statement to disable logging on serial port.
 #define SERIAL_PORT_LOG_ENABLE 1
@@ -31,6 +31,9 @@ const int periodBrakeRead = 10;             //period of brake input interrupt re
 boolean leverReadTicked = 0;                //keep track of whether brake was read
 const int periodServoWrite = 50;
 boolean servoWriteTicked = 0;                //keep track of whether brake was read
+const int periodAccelRead = 10;             //period of brake input interrupt reading in ms
+boolean accelReadTicked = 0;                //keep track of whether brake was read
+
 
 /*battery*/
 const int batteryVoltageCutoff = 3.6*4/3.3*1023/9.18;  // 
@@ -45,14 +48,18 @@ const int maxHighTime = 2200;               //max High time for PWM to servo, ac
 const int minServoRange = 90;              //0 degrees would output minHighTime
 const int maxServoRange = 175;              //180 degrees would ouput maxHighTime
 float brakeRead1;                     // value read in from brake lever after being smoothed
+float brakeRead2;                     // value read in from brake lever after being smoothed
 float tiltRead;                             // value read in from tilt lever after being smoothed
 int brakeServoOutput1;                      // servo output for brake
+int brakeServoOutput2;                      // servo output for brake
 int tiltServoOutput;                        // servo output for tiltlock
 int brakeServoOutputProcessed1;             // after processed for locking
+int brakeServoOutputProcessed2;             // after processed for locking
 int tiltServoOutputProcessed;               // after processed for locking
 
 /*For smoothing break input*/
 AnalogSmoothInt smoothedBrake1 = AnalogSmoothInt(5);
+AnalogSmoothInt smoothedBrake2 = AnalogSmoothInt(5);
 AnalogSmoothInt smoothedTilt = AnalogSmoothInt(5);
 
 /*Parking lock*/
@@ -63,6 +70,7 @@ ParkingLock tiltLock = ParkingLock(1000/periodBrakeRead,lockingTime, lockingTol)
 
 /*Servo Objects*/
 Servo brakeServo1;
+Servo brakeServo2;
 Servo tiltServo;
 
 /*Wheel Speed*/
@@ -80,9 +88,6 @@ WheelSpeed wheel3(rollout2, magnets3, minSpeed);
 
 /* Accel Speed */
 const int freq = 100;
-// unsigned long start_time = 0;  already initialized?
-// unsigned long end_time = 0;
-
 const int timePeriod = 10000;          // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
 AccelSpeed myAccelSpeed(freq);         // create AccelSpeed object with some frequency //change to 100Hz
 
@@ -90,10 +95,17 @@ int resetPeriod = 10;     // reset period in seconds
 int resetDuration = 1;    // reset duration in seconds
 boolean braking = true;
 
-
+/* Anti Lock Brake */
+const int kP = 0.001;
+int maxSlip = 20;
+AntiLockBrake absWheel1(kP, 99, 99, maxSlip, minServoRange);
+AntiLockBrake absWheel2(kP, 99, 99, maxSlip, minServoRange);
+int absOutputWheel1;
+int absOutputWheel2;
 
 void setup() {  
   brakeServo1.attach(brakePWMPin1,minHighTime,maxHighTime);
+  brakeServo2.attach(brakePWMPin2,minHighTime,maxHighTime);
   tiltServo.attach(tiltPWMPin,minHighTime,maxHighTime);  
 
   /*Wheel speed*/
@@ -101,7 +113,6 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2UpISR, RISING);
   attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
   
-  CurieTimerOne.start(timePeriod, &timedUpdateSpeedISR);  // will run timedUpdateSpeed interrupt every .01 seconds
   
   Serial.begin(9600);
   Serial.println("-- initialized --");
@@ -115,6 +126,10 @@ void loop() {
     wheelSpeed();
     accelSpeed();
     brake();
+  } else {
+    Serial.println("low bat!!");
+    Serial.println(batteryVoltage);
+    Serial.println(batteryVoltageCutoff);
   }
   /*
   end_time = micros();

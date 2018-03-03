@@ -3,25 +3,26 @@ void readLever() {
   /*This loop is entered once every 'periodBrakeRead' milliseconds, given that the rest of the program doesn't take too long*/
   if (!((millis()*2/periodBrakeRead)%2) && !leverReadTicked) {         
     /*brake 1*/
-    //Serial.print(millis()); Serial.print("\t");
-    //Serial.print(millis()*2/periodBrakeRead); Serial.print("\t");
     brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
     brakeServoOutput1 = convertToServo(brakeRead1);
     brakeServoOutputProcessed1 = brakeLock1.processParkingLock(brakeServoOutput1);
-    if (wheel2._mphX10 > 20) {
+    if (wheel2._mphX10 > 20) {//dont lock if over 2mph
       brakeServoOutputProcessed1 = brakeServoOutput1;
     }
+    /*brake 2*/
+    brakeRead2 = smoothedBrake2.analogReadSmooth(brakePin2);
+    brakeServoOutput2 = convertToServo(brakeRead2);
+    
     /*tilt*/
     tiltRead = smoothedTilt.analogReadSmooth(tiltPin);
     tiltServoOutput = convertToServo(tiltRead);
     tiltServoOutputProcessed = tiltLock.processParkingLock(tiltServoOutput);
 
     leverReadTicked = true;      
-    /*
-    Serial.print(brakeServoOutput1); Serial.print("\t");
-    Serial.print(brakeServoOutputProcessed1); Serial.print("\t");
-    */
-    Serial.print(wheel2._mphX10); Serial.print("\t");
+    
+    Serial.print(brakeServoOutput1);                      Serial.print("\t");
+    Serial.print(brakeServoOutputProcessed1);             Serial.print("\t");
+    Serial.print(wheel2._mphX10);                         Serial.print("\t");
     Serial.print((int)(myAccelSpeed._vehicleSpeed*22.4)); Serial.print("\t");
     Serial.println();
   } else if ((millis()*2/periodBrakeRead)%2) {
@@ -31,12 +32,13 @@ void readLever() {
 
 /*10Hz*/
 void brake() {
-  if (!(millis()%periodServoWrite) && !servoWriteTicked) {        
+  if (!((millis()*2/periodServoWrite)%2) && !servoWriteTicked) {        
     antiLockBrake(); 
     brakeServo1.write(brakeServoOutputProcessed1); 
+    brakeServo2.write(brakeServoOutput2); 
     tiltServo.write(tiltServoOutputProcessed); 
     servoWriteTicked = true;
-  } else if (millis()%periodServoWrite) {
+  } else if ((millis()*2/periodServoWrite)%2) {
     servoWriteTicked = false;
   }
 }

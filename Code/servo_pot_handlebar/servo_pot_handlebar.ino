@@ -1,4 +1,4 @@
-#include "ServoTimer2.h"
+#include "Servo.h"
 #include <Wire.h>
 
 boolean debug = true;                  //Serial.print debug statements activate if debug = True

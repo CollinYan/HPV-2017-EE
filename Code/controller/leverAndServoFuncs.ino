@@ -6,7 +6,7 @@ void readLever() {
     brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
     brakeServoOutput1 = convertToServo(brakeRead1);
     brakeServoOutputProcessed1 = brakeLock1.processParkingLock(brakeServoOutput1);
-    if (wheel2._mphX10 > 20) {//dont lock if over 2mph
+    if (wheel2._mphX100 > 20) {//dont lock if over 2mph
       brakeServoOutputProcessed1 = brakeServoOutput1;
     }
     /*brake 2*/
@@ -22,8 +22,8 @@ void readLever() {
     
     Serial.print(brakeServoOutput1);                      Serial.print("\t");
     Serial.print(brakeServoOutputProcessed1);             Serial.print("\t");
-    Serial.print(wheel2._mphX10);                         Serial.print("\t");
-    Serial.print((int)(myAccelSpeed._vehicleSpeed*22.4)); Serial.print("\t");
+    Serial.print(wheel2._mphX100);                         Serial.print("\t");
+    Serial.print((int)(myAccelSpeed._mphX100)); Serial.print("\t");
     Serial.println();
   } else if ((millis()*2/periodBrakeRead)%2) {
     leverReadTicked = false;

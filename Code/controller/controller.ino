@@ -77,14 +77,17 @@ Servo tiltServo;
 const int rollout1 = 2136;                              //circumference of front wheel in mm
 const int rollout2 = 2136;                               //circumference of rear left wheel in mm
 const int rollout3 = 2136;                               //circumference of rear right wheel in mm
-const int magnets1 = 8;                                     //# of magnets on front wheel
-const int magnets2 = 8;                                      //# of magnets on rear left wheel
-const int magnets3 = 8;                                      //# of magnets on rear right wheel
+const int magnets1 = 16;                                     //# of magnets on front wheel
+const int magnets2 = 16;                                      //# of magnets on rear left wheel
+const int magnets3 = 16;                                      //# of magnets on rear right wheel
 const int minSpeed = 1;                                     //minSpeed in mph
 
 WheelSpeed wheel1(rollout1, magnets1, minSpeed);
-WheelSpeed wheel2(rollout2, magnets2, minSpeed);
-WheelSpeed wheel3(rollout2, magnets3, minSpeed);
+WheelSpeed wheel2(rollout2, magnets2, minSpeed); 
+WheelSpeed wheel3(rollout2, magnets3, minSpeed); 
+AnalogSmoothInt smoothedWheel1 = AnalogSmoothInt(2);
+AnalogSmoothInt smoothedWheel2 = AnalogSmoothInt(2);
+AnalogSmoothInt smoothedWheel3 = AnalogSmoothInt(2);
 
 /* Accel Speed */
 const int freq = 100;

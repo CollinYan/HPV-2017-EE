@@ -55,7 +55,7 @@ bool WheelSpeed::zeroMPH() {
 }
 
 void WheelSpeed::calcSpeed() {
-  _centerToCenter = (_tUp2 - _tUp1)/10; //in 10microseconds, so we get mphX100 instead of just mph
+  _centerToCenter = (_tUp2 - _tUp1)/100; //in 10microseconds, so we get mphX100 instead of just mph
   //Serial.print(_centerToCenter);
   //Serial.println(_milesPerMagnetMicrosecondsPerHour);
   _mphX100 = _milesPerMagnetMicrosecondsPerHour / _centerToCenter;

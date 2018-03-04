@@ -22,7 +22,7 @@ class WheelSpeed {
   private:
   /*miles per magnet times microseconds per hour, also mph*microsecond/magnet
     when divided by microseconds/magnet aka the time between pulses, the result is mph*/
-  unsigned int _milesDiv10PerMagnetMicrosecondsPerHour;
+  unsigned long _milesPerMagnetMicrosecondsPerHour;
   int _centerToCenter;
 
   int _minTime;

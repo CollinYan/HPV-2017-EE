@@ -88,7 +88,7 @@ WheelSpeed wheel3(rollout2, magnets3, minSpeed);
 
 /* Accel Speed */
 const int freq = 100;
-const int scale = 0.9;
+const float scale = 0.9;
 const int timePeriod = 10000;          // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
 AccelSpeed myAccelSpeed(freq, scale);         // create AccelSpeed object with some frequency //change to 100Hz
 // 1 mi/h -> 100 , right now is m/s

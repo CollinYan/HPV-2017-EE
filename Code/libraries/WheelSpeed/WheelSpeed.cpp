@@ -7,13 +7,13 @@
 #include "Arduino.h"
 #include "WheelSpeed.h"
 
-WheelSpeed::WheelSpeed(int tireRollout, int numMagnets, int minSpeed) {  
+WheelSpeed::WheelSpeed(int tireRollout, int numMagnets, int minSpeed) {
   _recent = 0;
-  _tUp1 = 0;                
+  _tUp1 = 0;
   _tUp2 = 0;
 
   _interruptedUp = false;
-  _mphX10 = 0;
+  _mphX100 = 0;
   _numPulses=0;
 
   _milesDiv10PerMagnetMicrosecondsPerHour = (float) tireRollout / 1e6 / 1.60934 / numMagnets * 1e6 * 60 * 60 / 10;  // near max value for unsigned int, change Div10 to Divxx to not overflow if change this val
@@ -35,19 +35,19 @@ void WheelSpeed::updateSpeed() {
     //Serial.print(_tUp2-_tUp1); Serial.print("\t");
     //Serial.println("calcing");
     calcSpeed();
-    _tUp1 = _tUp2;    
+    _tUp1 = _tUp2;
     _numPulses += 1;
   } else {
     //Serial.print(_tUp2);
 
     //Serial.println("bouncing");
   }
-  _interruptedUp = false;  
+  _interruptedUp = false;
 }
 
 bool WheelSpeed::zeroMPH() {
   if (micros()-_recent > _maxTime) {
-    _mphX10 = 0;
+    _mphX100 = 0;
     //Serial.println("zeroed");
     return true;
   }
@@ -55,9 +55,8 @@ bool WheelSpeed::zeroMPH() {
 }
 
 void WheelSpeed::calcSpeed() {
-  _centerToCenter = (_tUp2 - _tUp1)/100; //in 100microseconds, so we get mphX10 instead of just mph
+  _centerToCenter = (_tUp2 - _tUp1)/10; //in 10microseconds, so we get mphX100 instead of just mph
   //Serial.print(_centerToCenter);
   //Serial.println(_milesDiv10PerMagnetMicrosecondsPerHour);
-  _mphX10 = _milesDiv10PerMagnetMicrosecondsPerHour / _centerToCenter;
+  _mphX100 = _milesDiv10PerMagnetMicrosecondsPerHour / _centerToCenter;
 }
-

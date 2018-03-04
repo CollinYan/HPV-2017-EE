@@ -14,7 +14,6 @@ class AccelSpeed {
     volatile boolean _interrupted;      // set True when readAccel is called, set back to False after updating speed
     void updateSpeed(int wheelSpeed, boolean braking);  // function updating speed
     float _mphX100;       // speed
-    float _scale;
     volatile float _aix;
     volatile float _aiy;
     volatile float _aiz;
@@ -22,6 +21,7 @@ class AccelSpeed {
   private:
     int _freq;
     int _brakeTime;
+    float _scale;
 };
 
 #endif

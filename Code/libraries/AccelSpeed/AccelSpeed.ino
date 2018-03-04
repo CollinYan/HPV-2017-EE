@@ -5,7 +5,7 @@ unsigned long start_time = 0;
 unsigned long end_time = 0;
 
 const int timePeriod = 10000;               // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
-AccelSpeed myAccelSpeed(100);         // create AccelSpeed object with some frequency //change to 100Hz
+AccelSpeed myAccelSpeed(100, 0.9);         // create AccelSpeed object with some frequency //change to 100Hz
 
 int resetPeriod = 10;     // reset period in seconds
 int resetDuration = 1;    // reset duration in seconds

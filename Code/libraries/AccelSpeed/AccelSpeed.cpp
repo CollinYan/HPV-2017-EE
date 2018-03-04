@@ -25,7 +25,7 @@ void AccelSpeed::setAccel() {
 
 void AccelSpeed::updateSpeed(int wheelSpeed, boolean braking) {
   if (!braking) {
-    _mphX100 = wheelSpeed/2.24/10;  // no brakes -> vehicles speed is same as wheels
+    _mphX100 = wheelSpeed;  // no brakes -> vehicles speed is same as wheels
     //
     _brakeTime = 0;
   }

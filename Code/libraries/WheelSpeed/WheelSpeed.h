@@ -18,12 +18,12 @@ class WheelSpeed {
   int _mphX100;                    // speed in mph
   uint8_t _numPulses;                // for debugging
   unsigned int _maxTime;                // max time between rising edges
-
+  int _centerToCenter;
+  
   private:
   /*miles per magnet times microseconds per hour, also mph*microsecond/magnet
     when divided by microseconds/magnet aka the time between pulses, the result is mph*/
   unsigned long _milesPerMagnetMicrosecondsPerHour;
-  int _centerToCenter;
 
   int _minTime;
   volatile int _tUp1;

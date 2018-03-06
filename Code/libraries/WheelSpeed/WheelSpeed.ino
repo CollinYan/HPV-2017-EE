@@ -19,7 +19,7 @@ void setup() {
   Serial.begin(9600);                               //DEBUG ONLY
   attachInterrupt(digitalPinToInterrupt(wheel1Pin), wheel1UpISR, RISING);
   attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2UpISR, RISING);
-  attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
+  attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);x
 }
 
 void loop() {

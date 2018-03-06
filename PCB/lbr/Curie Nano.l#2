@@ -165,6 +165,7 @@
 <devices>
 <device name="" package="CURIENANO">
 <connects>
+<connect gate="G$1" pin="3V3" pad="P$18"/>
 <connect gate="G$1" pin="5V0" pad="5V0"/>
 <connect gate="G$1" pin="A0" pad="A0"/>
 <connect gate="G$1" pin="A1" pad="A1"/>

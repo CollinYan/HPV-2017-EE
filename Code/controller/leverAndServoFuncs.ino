@@ -20,11 +20,9 @@ void readLever() {
 
     leverReadTicked = true;      
     
-    Serial.print(brakeServoOutput1);                      Serial.print("\t");
-    Serial.print(brakeServoOutputProcessed1);             Serial.print("\t");
-    Serial.print(wheel2._mphX100);                         Serial.print("\t");
-    Serial.print((int)(myAccelSpeed._mphX100)); Serial.print("\t");
-    Serial.println();
+    //Serial.print(brakeServoOutput1);                      Serial.print("\t");
+    //Serial.print(brakeServoOutputProcessed1);             Serial.print("\t");
+    
   } else if ((millis()*2/periodBrakeRead)%2) {
     leverReadTicked = false;
   }
@@ -34,7 +32,9 @@ void readLever() {
 void brake() {
   if (!((millis()*2/periodServoWrite)%2) && !servoWriteTicked) {        
     antiLockBrake(); 
-    brakeServo1.write(brakeServoOutputProcessed1); 
+    wheel1PID.Compute();
+    latestInput1 = min(latestInput1, brakeServoOutputProcessed1);
+    brakeServo1.write((int)round(latestInput1)); 
     brakeServo2.write(brakeServoOutput2); 
     tiltServo.write(tiltServoOutputProcessed); 
     servoWriteTicked = true;

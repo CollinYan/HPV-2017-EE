@@ -19,7 +19,9 @@ WheelSpeed::WheelSpeed(int tireRollout, int numMagnets, int minSpeed) {
   _milesPerMagnetMicrosecondsPerHour = (float) tireRollout / 1e6 / 1.60934 / numMagnets * 1e6 * 60 * 60;  // near max value for unsigned int, change Div10 to Divxx to not overflow if change this val
   _maxTime = _milesPerMagnetMicrosecondsPerHour / minSpeed * 10;
   _centerToCenter = 0;
-  _minTime = 2000;
+  // max speed is _milesPerMagnetMicrosecondsPerHour/_minTime; (tireRollout,numMagnets,_minTime=6000us)=(2136,16,6000) -> 50mph
+  // need to adjust for similar top speed when changing tire size
+  _minTime = 6000;        
 }
 
 void WheelSpeed::readTimeUp() {
@@ -55,7 +57,7 @@ bool WheelSpeed::zeroMPH() {
 }
 
 void WheelSpeed::calcSpeed() {
-  _centerToCenter = (_tUp2 - _tUp1)/100; //in 10microseconds, so we get mphX100 instead of just mph
+  _centerToCenter = (_tUp2 - _tUp1)/100; //in 100microseconds, so we get mphX100 instead of just mph
   //Serial.print(_centerToCenter);
   //Serial.println(_milesPerMagnetMicrosecondsPerHour);
   _mphX100 = _milesPerMagnetMicrosecondsPerHour / _centerToCenter;

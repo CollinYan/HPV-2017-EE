@@ -22,21 +22,23 @@ void setup() {
 }
 
 void loop() {
-  //Serial.print("velocity: ");
-  //Serial.print((int)(myAccelSpeed._vehicleSpeed*22.4));
-  //Serial.print("\t");
+  Serial.print("velocity: ");
+  Serial.print((myAccelSpeed._mphX100[2]));
+  Serial.print("\t");
   //Serial.print("accel: ");
   //Serial.println(myAccelSpeed._aix);
   
   if (myAccelSpeed._interrupted) {
-    myAccelSpeed.updateSpeed(0, braking);    // placeholders for wheelspeed and braking
+    myAccelSpeed.updateSpeed(0,0, braking);    // placeholders for wheelspeed and braking
   }
-    
+  Serial.println("crash9");
   
   if ((millis()/(1000*resetDuration))%(resetPeriod/resetDuration)==0) {
+    Serial.println("@@@@@@@");
     braking = false;
   }
   else {
+    Serial.println("crash11");
     braking = true;
   }
 }

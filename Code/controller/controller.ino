@@ -1,3 +1,4 @@
+#include <PID_v1.h>
 #include "Servo.h"
 #include "AnalogSmoothInt.h"
 #include "ParkingLock.h"
@@ -74,40 +75,48 @@ Servo brakeServo2;
 Servo tiltServo;
 
 /*Wheel Speed*/
-const int rollout1 = 2136;                              //circumference of front wheel in mm
+const int rollout1 = 2136;                              //circumference of front wheel in mm 2117 loaded harrison's tire, 2146, unloaded harrison's tire
 const int rollout2 = 2136;                               //circumference of rear left wheel in mm
 const int rollout3 = 2136;                               //circumference of rear right wheel in mm
-const int magnets1 = 16;                                     //# of magnets on front wheel
+const int magnets1 = 8;                                     //# of magnets on front wheel
 const int magnets2 = 16;                                      //# of magnets on rear left wheel
 const int magnets3 = 16;                                      //# of magnets on rear right wheel
-const int minSpeed = 1;                                     //minSpeed in mph
+const int minSpeed = 5;                                     //minSpeed in mph
 
 WheelSpeed wheel1(rollout1, magnets1, minSpeed);
 WheelSpeed wheel2(rollout2, magnets2, minSpeed); 
 WheelSpeed wheel3(rollout2, magnets3, minSpeed); 
-AnalogSmoothInt smoothedWheel1 = AnalogSmoothInt(2);
-AnalogSmoothInt smoothedWheel2 = AnalogSmoothInt(2);
-AnalogSmoothInt smoothedWheel3 = AnalogSmoothInt(2);
+AnalogSmoothInt smoothedWheel1 = AnalogSmoothInt(1);
+AnalogSmoothInt smoothedWheel2 = AnalogSmoothInt(1);
+AnalogSmoothInt smoothedWheel3 = AnalogSmoothInt(1);
 
 /* Accel Speed */
 const int freq = 100;
-const float scale = 0.9;
-const int timePeriod = 10000;          // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
+const float scale = .87;           // 1/cos(3degrees) = 1.001372
+const int timePeriod = 10000;           // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
 AccelSpeed myAccelSpeed(freq, scale);         // create AccelSpeed object with some frequency //change to 100Hz
 // 1 mi/h -> 100 , right now is m/s
+int accelIndice;
 
 int resetPeriod = 10;     // reset period in seconds
 int resetDuration = 1;    // reset duration in seconds
 boolean braking = true;
 
 /* Anti Lock Brake */
-const int kP = 0.001;
-int maxSlip = 20;
-AntiLockBrake absWheel1(kP, 99, 99, maxSlip, minServoRange);
-AntiLockBrake absWheel2(kP, 99, 99, maxSlip, minServoRange);
+const double kP = 0.005;
+const double kI = 0;
+const double kD = 0;
+double maxSlipPercX100 = 1000;
+AntiLockBrake absWheel1(kP, 99, 99, maxSlipPercX100/100, minServoRange);
+AntiLockBrake absWheel2(kP, 99, 99, maxSlipPercX100/100, minServoRange);
 int absOutputWheel1;
 int absOutputWheel2;
+double latestInput1 = minServoRange;
+double slip2 = 0;
 
+/* Anti Lock Brake PID Library*/
+PID wheel1PID(&slip2, &latestInput1, &maxSlipPercX100, kP, kI, kD, DIRECT);
+  
 void setup() {
   brakeServo1.attach(brakePWMPin1,minHighTime,maxHighTime);
   brakeServo2.attach(brakePWMPin2,minHighTime,maxHighTime);
@@ -118,6 +127,9 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2UpISR, RISING);
   attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
 
+  wheel1PID.SetMode(AUTOMATIC);
+  wheel1PID.SetSampleTime(100); //slower than brake actuation so we dont have delay
+  wheel1PID.SetOutputLimits(minServoRange, maxServoRange);
 
   Serial.begin(9600);
   Serial.println("-- initialized --");

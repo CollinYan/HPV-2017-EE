@@ -1,7 +1,6 @@
 clear;  
 clf;
-rawSpeed = csvread('speed with 16 and 8 magnets.csv',1);
-rawSpeed = csvread('speed_rear_8.csv',1);
+rawSpeed = csvread('accel v and wheel v comparison 2.csv',1);;
 %rawSpeed = csvread('back to 2khz and front wheel.csv',1);
 %rawSpeed = csvread('speed while riding.csv',1);
 %rawSpeed = csvread('front and rear wheel speed.csv',1);

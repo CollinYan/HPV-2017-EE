@@ -4,8 +4,8 @@ void antiLockBrake() {
   Serial.print(wheel2._mphX100);                            Serial.print("\t");
   Serial.print(wheel1._mphX100);                            Serial.print("\t");
   Serial.print((int)(myAccelSpeed._mphX100[accelIndice]));  Serial.print("\t");
-  Serial.print(brakeServoOutput1);                          Serial.print("\t");
-  Serial.print(latestInput1);                               Serial.print("\t");
+  Serial.print(brakeServoOutput2);                          Serial.print("\t");
+  Serial.print(latestInput2);                               Serial.print("\t");
   Serial.print(braking);                                    Serial.print("\t");
   Serial.println();
 }

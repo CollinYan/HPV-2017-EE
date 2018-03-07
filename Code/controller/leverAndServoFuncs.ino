@@ -28,7 +28,7 @@ void readLever() {
 void brake() {
   if (!((millis()*2/periodServoWrite)%2) && !servoWriteTicked) {        
     antiLockBrake(); 
-    wheel2PID.SetOutputLimits(minServoRange, brakeServoOutput2);
+    //wheel2PID.SetOutputLimits(minServoRange, brakeServoOutput2);
     wheel2PID.Compute();
     brakeServo1.write(latestInput1); 
     brakeServo2.write(latestInput2); 

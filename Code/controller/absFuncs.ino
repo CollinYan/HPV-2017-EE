@@ -1,6 +1,10 @@
 /*called by brake which is 10Hz*/
 void antiLockBrake() {
-  slip2 = (myAccelSpeed._mphX100[accelIndice] - wheel2._mphX100)/myAccelSpeed._mphX100[accelIndice]*10000;
+  if (myAccelSpeed._mphX100[accelIndice] < minSpeed) {
+    slip2 = 0;
+  } else {
+    slip2 = (myAccelSpeed._mphX100[accelIndice] - wheel2._mphX100)/myAccelSpeed._mphX100[accelIndice]*10000;
+  }
   Serial.print(wheel2._mphX100);                            Serial.print("\t");
   Serial.print(wheel1._mphX100);                            Serial.print("\t");
   Serial.print((int)(myAccelSpeed._mphX100[accelIndice]));  Serial.print("\t");

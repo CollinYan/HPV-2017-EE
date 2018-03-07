@@ -54,9 +54,6 @@ float tiltRead;                             // value read in from tilt lever aft
 int brakeServoOutput1;                      // servo output for brake
 int brakeServoOutput2;                      // servo output for brake
 int tiltServoOutput;                        // servo output for tiltlock
-int brakeServoOutputProcessed1;             // after processed for locking
-int brakeServoOutputProcessed2;             // after processed for locking
-int tiltServoOutputProcessed;               // after processed for locking
 
 /*For smoothing break input*/
 AnalogSmoothInt smoothedBrake1 = AnalogSmoothInt(5);
@@ -92,30 +89,26 @@ AnalogSmoothInt smoothedWheel3 = AnalogSmoothInt(1);
 
 /* Accel Speed */
 const int freq = 100;
-const float scale = .87;           // 1/cos(3degrees) = 1.001372
-const int timePeriod = 10000;           // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
-AccelSpeed myAccelSpeed(freq, scale);         // create AccelSpeed object with some frequency //change to 100Hz
-// 1 mi/h -> 100 , right now is m/s
-int accelIndice;
-
-int resetPeriod = 10;     // reset period in seconds
-int resetDuration = 1;    // reset duration in seconds
-boolean braking = true;
+const float scale = .87;                // scales acceleration values; 1/cos(3degrees) = 1.001372
+AccelSpeed myAccelSpeed(freq, scale);   // create AccelSpeed object with some frequency and scaling factor
+int accelIndice;                        // index of accel-based velocity to check given different current wheelspeed
+boolean braking;
 
 /* Anti Lock Brake */
 const double kP = 0.005;
 const double kI = 0;
 const double kD = 0;
 double maxSlipPercX100 = 1000;
-AntiLockBrake absWheel1(kP, 99, 99, maxSlipPercX100/100, minServoRange);
-AntiLockBrake absWheel2(kP, 99, 99, maxSlipPercX100/100, minServoRange);
 int absOutputWheel1;
 int absOutputWheel2;
 double latestInput1 = minServoRange;
+double latestInput2 = minServoRange;
+double slip1 = 0;
 double slip2 = 0;
 
 /* Anti Lock Brake PID Library*/
-PID wheel1PID(&slip2, &latestInput1, &maxSlipPercX100, kP, kI, kD, DIRECT);
+PID wheel1PID(&slip1, &latestInput1, &maxSlipPercX100, kP, kI, kD, DIRECT);
+PID wheel2PID(&slip2, &latestInput2, &maxSlipPercX100, kP, kI, kD, DIRECT);
   
 void setup() {
   brakeServo1.attach(brakePWMPin1,minHighTime,maxHighTime);
@@ -128,8 +121,11 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
 
   wheel1PID.SetMode(AUTOMATIC);
-  wheel1PID.SetSampleTime(100); //slower than brake actuation so we dont have delay
+  wheel1PID.SetSampleTime(100);           //slower than brake actuation so we dont have delay
   wheel1PID.SetOutputLimits(minServoRange, maxServoRange);
+  wheel2PID.SetMode(AUTOMATIC);
+  wheel2PID.SetSampleTime(100);           //slower than brake actuation so we dont have delay
+  wheel2PID.SetOutputLimits(minServoRange, maxServoRange);
 
   Serial.begin(9600);
   Serial.println("-- initialized --");
@@ -144,9 +140,9 @@ void loop() {
     accelSpeed();
     brake();
   } else {
-    Serial.println("low bat!!");
-    Serial.println(batteryVoltage);
-    Serial.println(batteryVoltageCutoff);
+    Serial.print("low bat!!:");                   Serial.print("\t");
+    Serial.print(batteryVoltage*3.3*9.18/1023);   Serial.print("\t");
+    Serial.println(batteryVoltageCutoff*3.3*9.18/1023);
   }
   /*
   end_time = micros();

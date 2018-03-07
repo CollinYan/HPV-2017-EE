@@ -3,11 +3,10 @@ void readLever() {
   /*This loop is entered once every 'periodBrakeRead' milliseconds, given that the rest of the program doesn't take too long*/
   if (!((millis()*2/periodBrakeRead)%2) && !leverReadTicked) {         
     /*brake 1*/
-    brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
-    brakeServoOutput1 = convertToServo(brakeRead1);
-    brakeServoOutputProcessed1 = brakeLock1.processParkingLock(brakeServoOutput1);
-    if (wheel2._mphX100 > 20) {//dont lock if over 2mph
-      brakeServoOutputProcessed1 = brakeServoOutput1;
+    brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);                        // smooth the analog value
+    brakeServoOutput1 = convertToServo(brakeRead1);                                 // convert it to servo position minServoRange to maxServoRange
+    if (wheel1._mphX100 < 200) {                                       //dont lock if over 2mph
+      brakeServoOutput1 = brakeLock1.processParkingLock(brakeServoOutput1);  // parking brkae on front wheel
     }
     /*brake 2*/
     brakeRead2 = smoothedBrake2.analogReadSmooth(brakePin2);
@@ -16,12 +15,9 @@ void readLever() {
     /*tilt*/
     tiltRead = smoothedTilt.analogReadSmooth(tiltPin);
     tiltServoOutput = convertToServo(tiltRead);
-    tiltServoOutputProcessed = tiltLock.processParkingLock(tiltServoOutput);
+    tiltServoOutput = tiltLock.processParkingLock(tiltServoOutput);
 
     leverReadTicked = true;      
-    
-    //Serial.print(brakeServoOutput1);                      Serial.print("\t");
-    //Serial.print(brakeServoOutputProcessed1);             Serial.print("\t");
     
   } else if ((millis()*2/periodBrakeRead)%2) {
     leverReadTicked = false;
@@ -32,11 +28,11 @@ void readLever() {
 void brake() {
   if (!((millis()*2/periodServoWrite)%2) && !servoWriteTicked) {        
     antiLockBrake(); 
-    wheel1PID.Compute();
-    latestInput1 = min(latestInput1, brakeServoOutputProcessed1);
-    brakeServo1.write((int)round(latestInput1)); 
-    brakeServo2.write(brakeServoOutput2); 
-    tiltServo.write(tiltServoOutputProcessed); 
+    wheel2PID.SetOutputLimits(minServoRange, brakeServoOutput2);
+    wheel2PID.Compute();
+    brakeServo1.write(latestInput1); 
+    brakeServo2.write(latestInput2); 
+    tiltServo.write(tiltServoOutput); 
     servoWriteTicked = true;
   } else if ((millis()*2/periodServoWrite)%2) {
     servoWriteTicked = false;

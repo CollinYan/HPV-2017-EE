@@ -5,9 +5,12 @@ void antiLockBrake() {
   if (accelIndice < 0) {
     accelIndice += 10;
   }
-  slip2 = (myAccelSpeed._mphX100[accelIndice] - wheel2._mphX100)/myAccelSpeed._mphX100[accelIndice]*10000;
-  absOutputWheel1 = absWheel1.processABS(myAccelSpeed._mphX100[accelIndice], wheel2._mphX100, brakeServoOutputProcessed1);
-  absOutputWheel2 = absWheel2.processABS(myAccelSpeed._mphX100[accelIndice], wheel2._mphX100, brakeServoOutput2);
+  if (myAccelSpeed._mphX100[accelIndice] < minSpeed*100) {
+    wheel1PID.SetMode(MANUAL);
+  } else {
+    wheel1PID.SetMode(AUTOMATIC);
+    slip2 = (myAccelSpeed._mphX100[accelIndice] - wheel2._mphX100)/myAccelSpeed._mphX100[accelIndice]*10000;
+  }
   Serial.print(wheel2._mphX100);                            Serial.print("\t");
   Serial.print(wheel1._mphX100);                            Serial.print("\t");
   Serial.print((int)(myAccelSpeed._mphX100[accelIndice]));  Serial.print("\t");

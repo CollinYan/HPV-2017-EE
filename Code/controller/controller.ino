@@ -107,10 +107,6 @@ const double kP = 0.005;
 const double kI = 0;
 const double kD = 0;
 double maxSlipPercX100 = 1000;
-AntiLockBrake absWheel1(kP, 99, 99, maxSlipPercX100/100, minServoRange);
-AntiLockBrake absWheel2(kP, 99, 99, maxSlipPercX100/100, minServoRange);
-int absOutputWheel1;
-int absOutputWheel2;
 double latestInput1 = minServoRange;
 double slip2 = 0;
 

@@ -6,7 +6,7 @@ void readLever() {
     brakeRead1 = smoothedBrake1.analogReadSmooth(brakePin1);
     brakeServoOutput1 = convertToServo(brakeRead1);
     brakeServoOutputProcessed1 = brakeLock1.processParkingLock(brakeServoOutput1);
-    if (wheel2._mphX100 > 20) {//dont lock if over 2mph
+    if (wheel2._mphX100 > 200) {//dont lock if over 2mph
       brakeServoOutputProcessed1 = brakeServoOutput1;
     }
     /*brake 2*/

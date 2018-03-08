@@ -57,7 +57,18 @@ PID::PID(double* Input, double* Output, double* Setpoint,
  **********************************************************************************/
 bool PID::Compute()
 {
-   if(!inAuto) return false;
+   if(!inAuto) {
+   	  //Serial.print(*mySetpoint);						Serial.print("\t");
+   	  //Serial.print(*myInput);							Serial.print("\t");
+   	  double error = *mySetpoint-*myInput;
+   	  double output = kp * error + outputSum;
+   	  if(output > outMax) output = outMax;
+      else if(output < outMin) output = outMin;
+      Serial.print(error);                          		Serial.print("\t");
+  	  Serial.print(outputSum);                               		Serial.print("\t");
+  	  Serial.print(output);                                    	Serial.print("\t");
+   	return false;
+   }
    unsigned long now = millis();
    unsigned long timeChange = (now - lastTime);
    if(timeChange>=SampleTime)
@@ -89,10 +100,10 @@ bool PID::Compute()
       /*Remember some variables for next time*/
       lastInput = input;
       lastTime = now;
-        Serial.print(error);                          Serial.print("\t");
-  Serial.print(outputSum);                               Serial.print("\t");
-  Serial.print(output);                                    Serial.print("\t");
-	    return true;
+      Serial.print(error);                          			Serial.print("\t");
+  	  Serial.print(outputSum);                               	Serial.print("\t");
+  	  Serial.print(output);                                    	Serial.print("\t");
+	  return true;
    }
    else return false;
 }

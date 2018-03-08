@@ -16,8 +16,8 @@ WheelSpeed::WheelSpeed(int tireRollout, int numMagnets, int minSpeed) {
   _mphX100 = 0;
   _numPulses=0;
 
-  _milesPerMagnetMicrosecondsPerHour = (float) tireRollout / 1e6 / 1.60934 / numMagnets * 1e6 * 60 * 60;  // near max value for unsigned int, change Div10 to Divxx to not overflow if change this val
-  _maxTime = _milesPerMagnetMicrosecondsPerHour / minSpeed * 10;
+  _milesPerMagnetMicrosecondsPerHour = (float)60 * 60 *tireRollout / 1e6 / 1.60934 / numMagnets * 1e6 ;  // near max value for unsigned int, change Div10 to Divxx to not overflow if change this val
+  _maxTime = _milesPerMagnetMicrosecondsPerHour / minSpeed ;
   _centerToCenter = 0;
   // max speed is _milesPerMagnetMicrosecondsPerHour/_minTime; (tireRollout,numMagnets,_minTime=6000us)=(2136,16,6000) -> 50mph
   // need to adjust for similar top speed when changing tire size

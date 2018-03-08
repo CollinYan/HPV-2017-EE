@@ -1,4 +1,4 @@
- #include <PID_v1.h>
+#include <PID_v1.h>
 #include "Servo.h"
 #include "AnalogSmoothInt.h"
 #include "ParkingLock.h"
@@ -97,11 +97,14 @@ const int timePeriod = 10000;           // frequency that timer will update (100
 AccelSpeed myAccelSpeed(freq, scale);         // create AccelSpeed object with some frequency //change to 100Hz
 // 1 mi/h -> 100 , right now is m/s
 int accelIndice;
+
+int resetPeriod = 10;     // reset period in seconds
+int resetDuration = 1;    // reset duration in seconds
 boolean braking = true;
 
 /* Anti Lock Brake */
-const double kP = 0.1;
-const double kI = 0.01;
+const double kP = 0.005;
+const double kI = 0.000;
 const double kD = 0;
 double maxSlipPercX100 = 1000;
 double latestInput1 = minServoRange;
@@ -109,19 +112,20 @@ double slip2 = 0;
 
 /* Anti Lock Brake PID Library*/
 PID wheel1PID(&slip2, &latestInput1, &maxSlipPercX100, kP, kI, kD, DIRECT);
-  
+
+int recentTime = 0;
 void setup() {
   brakeServo1.attach(brakePWMPin1,minHighTime,maxHighTime);
   brakeServo2.attach(brakePWMPin2,minHighTime,maxHighTime);
   tiltServo.attach(tiltPWMPin,minHighTime,maxHighTime);
 
   /*Wheel speed*/
-  attachInterrupt(digitalPinToInterrupt(wheel1Pin), wheel1UpISR, RISING);
-  attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2UpISR, RISING);
-  attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
+  //attachInterrupt(digitalPinToInterrupt(wheel1Pin), wheel1UpISR, RISING);
+  //attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2UpISR, RISING);
+  //attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
 
   wheel1PID.SetMode(AUTOMATIC);
-  wheel1PID.SetSampleTime(45); //slower than brake actuation so we dont have delay
+  wheel1PID.SetSampleTime(100); //slower than brake actuation so we dont have delay
   wheel1PID.SetOutputLimits(minServoRange, maxServoRange);
 
   Serial.begin(9600);
@@ -129,18 +133,33 @@ void setup() {
 }
 
 void loop() {
-  //start_time = micros();
-  checkBat(); //checks battery voltage and sets batteryGood
-  if (batteryGood) {
-    readLever();
-    wheelSpeed();
-    accelSpeed();
-    brake();
-  } else {
-    Serial.println("low bat!!");
-    Serial.println(batteryVoltage);
-    Serial.println(batteryVoltageCutoff);
+  recentTime = millis();
+  while (millis() < 3000) {
+    brakeServo1.write(maxServoRange);
+    delay(100);
+    brakeServo1.write(maxServoRange-30);
+    delay(100);
   }
+  recentTime = millis();
+  while (millis()-recentTime < 3000) {
+    brakeServo1.write(maxServoRange);
+    delay(200);
+    brakeServo1.write(maxServoRange-30);
+    delay(200);
+  }
+  recentTime = millis();
+  while (millis()-recentTime < 3000) {
+    brakeServo1.write(maxServoRange);
+    delay(400);
+    brakeServo1.write(maxServoRange-30);
+    delay(400);
+  }
+  while(1){
+    brakeServo1.write(minServoRange);
+  }
+  
+  //start_time = micros();
+  
   /*
   end_time = micros();
   Serial.print("Start time: ");

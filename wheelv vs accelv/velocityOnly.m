@@ -31,20 +31,19 @@ for i = 1:3
     plot(wheelVelF(startEnd(i,1):startEnd(i,2))/100,'r');
     plot(accelVel(startEnd(i,1):startEnd(i,2))/100,'g');
     ylabel('velocity [mph]')
-    plot(brakePos(startEnd(i,1):startEnd(i,2))/10,'m');
+    %plot(brakePos(startEnd(i,1):startEnd(i,2))/10,'m');
     %plot(brakePID(startEnd(i,1):startEnd(i,2))/10,'c');
     
-    plot(outputSum(startEnd(i,1):startEnd(i,2))/10,'r');    
-    plot(output(startEnd(i,1):startEnd(i,2))/10,'k');
+    %plot(outputSum(startEnd(i,1):startEnd(i,2))/10,'r');    
+    
     ylim([-1 20]);
     yyaxis right;
     hold on;
-    plot(perSlipFW(startEnd(i,1):startEnd(i,2))/100,'Color',[1 0.5 0]);
-    plot(error(startEnd(i,1):startEnd(i,2))/100,'g');
-    ylim([-110 110]);
-    legend('wheel velocity rear [mph]', 'wheel velocity front [mph]', 'brake position', 'outputSum', 'output', ...         
-        'slipFW', 'error');
-    %legend('wheel velocity rear [mph]', 'wheel velocity front [mph]', 'accel-based velocity [mph]', 'brake position', 'brake PID' , 'outputSum', 'output', ...         
+    plot(braking(startEnd(i,1):startEnd(i,2)),'k');
+    %plot(perSlipFW(startEnd(i,1):startEnd(i,2))/100,'Color',[1 0.5 0]);
+    %plot(error(startEnd(i,1):startEnd(i,2))/100,'g');
+    ylim([-1 2]);
+    legend('wheel velocity rear [mph]', 'wheel velocity front [mph]', 'accel-based velocity', 'braking');   %legend('wheel velocity rear [mph]', 'wheel velocity front [mph]', 'accel-based velocity [mph]', 'brake position', 'brake PID' , 'outputSum', 'output', ...         
     %    'slipFW', 'error');
     ylabel('brake position and %wheel slip and errors')
     grid on;

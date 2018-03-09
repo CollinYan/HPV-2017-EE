@@ -1,8 +1,8 @@
 clear;  
 clf;
 close all;
-rawSpeed = csvread('brakePIDMarch8Slip8kP0.02kI0.06kD0min70.csv',1);
-rawSpeed = csvread('brakePIDMarch8Manual.csv',1);
+rawSpeed = csvread('brakePIDMarch8Slip8.9kP0.02kI0.06kD0min70.csv',1);
+%rawSpeed = csvread('brakePIDMarch8Manual.csv',1);
 wheelVelR = rawSpeed(:,1);
 wheelVelF = rawSpeed(:,2);
 accelVel = rawSpeed(:,3);

@@ -42,20 +42,12 @@ void AccelSpeed::updateSpeed(int wheelSpeed, int centerToCenter, boolean braking
       for (int i = 0; ARRA_SIZE; i++) {
         _mphX100[i] = wheelSpeed;
       }
-    } else if (_brakeTime == 1) { //first time braking, calculate velocities based on _aixArr
-      for (int i = 1; i <= (ARRA_SIZE+_arrayPos-_recentSyncIndice)%ARRA_SIZE; i++) { //loop from _recentSyncIndice+1 to _arrayPos
-        _mphX100[_recentSyncIndice+i] = _mphX100[(_recentSyncIndice-1+ARRA_SIZE)%ARRA_SIZE]+(9.8*_aix * _scale / _freq) * 223.7;
+    } else if (_brakeTime == 1) { //first time braking, calculate velocities based on last wheel sync and stored _aixArr
+      for (int i = _recentSyncIndice; i < _recentSyncIndice+ARRA_SIZE-1; i++) {
+      	_mphX100[(i+1)%ARRA_SIZE] = _mphX100[i%ARRA_SIZE] + 9.8 * _aixArr[(i+1)%ARRA_SIZE]*_scale/_freq*223.7;
       }
-    } else if (_arrayPos>0) {
-      //Serial.println("non-0 indicis");
-      //Serial.println(_mphX100[_arrayPos-1]);
-      //Serial.println((9.8*_aix * _scale / _freq) * 223.7);
-      _mphX100[_arrayPos] = _mphX100[_arrayPos-1]+(9.8*_aix * _scale / _freq) * 223.7;  //  calculate mphX100 based on acceleration //HH: changed from a * (1/f) to a/f since 1/f=0
-    } else if (_arrayPos == 0) {
-      //Serial.println("indice 0");
-      //Serial.println(_mphX100[_arrayPos-1]);
-      //Serial.println((9.8*_aix * _scale / _freq) * 223.7);
-      _mphX100[_arrayPos] = _mphX100[ARRA_SIZE-1]+(9.8*_aix * _scale / _freq) * 223.7;  //  calculate mphX100 based on acceleration //HH: changed from a * (1/f) to a/f since 1/f=0
+    } else {		//update speed at current time based off of _aix
+      _mphX100[_arrayPos] = _mphX100[(_arrayPos+ARRA_SIZE-1)%ARRA_SIZE]+(9.8*_aix * _scale / _freq) * 223.7;  //  calculate mphX100 based on acceleration //HH: changed from a * (1/f) to a/f since 1/f=0
     }
   }
   _interrupted = false;

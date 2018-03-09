@@ -60,6 +60,7 @@ bool PID::Compute()
    if(!inAuto) {
    	  //Serial.print(*mySetpoint);						Serial.print("\t");
    	  //Serial.print(*myInput);							Serial.print("\t");
+   	  /*
    	  double error = *mySetpoint-*myInput;
    	  double output = kp * error + outputSum;
    	  if(output > outMax) output = outMax;
@@ -67,6 +68,7 @@ bool PID::Compute()
       Serial.print(error);                          		Serial.print("\t");
   	  Serial.print(outputSum);                               		Serial.print("\t");
   	  Serial.print(output);                                    	Serial.print("\t");
+  	  */
    	return false;
    }
    unsigned long now = millis();

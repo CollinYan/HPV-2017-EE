@@ -32,8 +32,8 @@ const int periodBrakeRead = 10;             //period of brake input interrupt re
 boolean leverReadTicked = 0;                //keep track of whether brake was read
 const int periodServoWrite = 50;
 boolean servoWriteTicked = 0;                //keep track of whether brake was read
-const int periodAccelRead = 10;             //period of brake input interrupt reading in ms
-boolean accelReadTicked = 0;                //keep track of whether brake was read
+const unsigned int periodAccelRead = 10;             //period of brake input interrupt reading in ms
+unsigned long lastAccelRead = 0;
 
 
 /*battery*/

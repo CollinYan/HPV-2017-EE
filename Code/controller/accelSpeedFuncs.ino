@@ -1,10 +1,13 @@
 void accelSpeed() { 
   /*100Hz*/
-  if (!((millis()*2/periodAccelRead)%2) && !accelReadTicked) {  //enters loop once every periodAccelRead        
-     myAccelSpeed.setAccel();
-     accelReadTicked = true;
-  } else if ((millis()*2/periodAccelRead)%2) {
-     accelReadTicked = false;
+  //if (!((millis()*2/periodAccelRead)%2) && !accelReadTicked) {  //enters loop once every periodAccelRead        
+  if (millis()-lastAccelRead > periodAccelRead) {
+    myAccelSpeed.setAccel();
+    lastAccelRead = millis(); 
+    Serial.print(wheel2._mphX100);                            Serial.print("\t");
+    Serial.print(wheel1._mphX100);                            Serial.print("\t");
+    Serial.print((int)(myAccelSpeed._mphX100[accelIndice]));  Serial.print("\t");
+    Serial.print(braking);                                    Serial.print("\t");
   }
 
   /*continuous*/

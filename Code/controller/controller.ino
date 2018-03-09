@@ -1,4 +1,4 @@
- #include <PID_v1.h>
+#include <PID_v1.h>
 #include "Servo.h"
 #include "AnalogSmoothInt.h"
 #include "ParkingLock.h"
@@ -103,7 +103,7 @@ boolean braking = true;
 const double kP = 0.02;
 const double kI = 0.06;
 const double kD = 0;//0.01/20 since 5000 slip 50% diff would cause 0.01*5000 / 20 less brake output which is 50 degrees, rails at min(90) + 40 = 130 at first.;
-double maxSlipPercX100 = 800;
+double maxSlipPercX100 = 850;
 double latestInput1 = minServoRange;
 double slip2 = 0;
 
@@ -122,7 +122,7 @@ void setup() {
 
   wheel1PID.SetMode(AUTOMATIC);
   wheel1PID.SetSampleTime(45); //slower than brake actuation so we dont have delay
-  wheel1PID.SetOutputLimits((maxServoRange-minServoRange)*0.7+minServoRange, maxServoRange);
+  wheel1PID.SetOutputLimits((maxServoRange-minServoRange)*0.73+minServoRange, maxServoRange);
 
   Serial.begin(9600);
   Serial.println("-- initialized --");

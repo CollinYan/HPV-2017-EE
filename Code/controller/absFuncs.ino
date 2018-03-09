@@ -5,7 +5,8 @@ void antiLockBrake() {
   if (accelIndice < 0) {
     accelIndice += 10;
   }
-  if (myAccelSpeed._mphX100[accelIndice] < minSpeed*100) {
+  //if (1) {
+  if (myAccelSpeed._mphX100[accelIndice] < (minSpeed*1.5)*100 || !braking) {
     wheel1PID.SetMode(MANUAL);
     latestInput1 = brakeServoOutputProcessed1;
   } else {
@@ -19,5 +20,6 @@ void antiLockBrake() {
   Serial.print(brakeServoOutput1);                          Serial.print("\t");
   Serial.print(latestInput1);                               Serial.print("\t");
   Serial.print(braking);                                    Serial.print("\t");
+  Serial.print(slip2);                                      Serial.print("\t");
 }
 

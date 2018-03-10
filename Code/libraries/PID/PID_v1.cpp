@@ -102,9 +102,9 @@ bool PID::Compute()
       /*Remember some variables for next time*/
       lastInput = input;
       lastTime = now;
-      Serial.print(error);                          			Serial.print("\t");
-  	  Serial.print(outputSum);                               	Serial.print("\t");
-  	  Serial.print(output);                                    	Serial.print("\t");
+      //Serial.print(error);                          			Serial.print("\t");
+  	  //Serial.print(outputSum);                               	Serial.print("\t");
+  	  //Serial.print(output);                                    	Serial.print("\t");
 	  return true;
    }
    else return false;

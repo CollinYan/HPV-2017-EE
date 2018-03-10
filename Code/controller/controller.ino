@@ -92,7 +92,7 @@ AnalogSmoothInt smoothedWheel3 = AnalogSmoothInt(1);
 
 /* Accel Speed */
 const int freq = 100;
-const float scale = .87;           // 1/cos(3degrees) = 1.001372
+const float scale = .92;           // 1/cos(3degrees) = 1.001372
 const int timePeriod = 10000;           // frequency that timer will update (1000 microseconds = .001 sec) //Hchaged to 10ms for now
 AccelSpeed myAccelSpeed(freq, scale);         // create AccelSpeed object with some frequency //change to 100Hz
 // 1 mi/h -> 100 , right now is m/s

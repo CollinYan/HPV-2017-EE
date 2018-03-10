@@ -8,6 +8,7 @@ void accelSpeed() {
     Serial.print(wheel1._mphX100);                            Serial.print("\t");
     Serial.print((int)(myAccelSpeed._mphX100[accelIndice]));  Serial.print("\t");
     Serial.print(braking);                                    Serial.print("\t");
+    Serial.println();  
   }
 
   /*continuous*/

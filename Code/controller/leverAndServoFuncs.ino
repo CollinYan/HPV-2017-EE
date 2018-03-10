@@ -33,7 +33,7 @@ void brake() {
   if (!((millis()*2/periodServoWrite)%2) && !servoWriteTicked) {        
     antiLockBrake(); 
     wheel1PID.Compute();
-    Serial.println();  
+    
     latestInput1 = min(latestInput1, brakeServoOutputProcessed1);
     brakeServo1.write((int)round(latestInput1)); 
     //brakeServo1.write(brakeServoOutput1); 

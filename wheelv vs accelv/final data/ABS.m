@@ -15,31 +15,21 @@ perSlipFW = rawSpeed(:,10);
 error = rawSpeed(:,1);
 outputSum = rawSpeed(:,2);
 output = rawSpeed(:,3);
-%{
 
-wheelVelR = rawSpeed(:,1);
-wheelVelF = rawSpeed(:,2);
-accelVel = rawSpeed(:,3);
-brakePos = rawSpeed(:,4);
-brakePID = rawSpeed(:,5);
-braking = rawSpeed(:,6);
-perSlipFW = rawSpeed(:,7);
-error = rawSpeed(:,8);
-outputSum = rawSpeed(:,9);
-output = rawSpeed(:,10);
-%}
 t = linspace(0,150,151)*50/1000;
-[val1, peakv1] = max(movmean(wheelVelR(1:length(wheelVelR)*0.4),10));
+[val1, peakv1] = max(movmean(wheelVelR(1:length(wheelVelR)*0.5),10));
 [val2, peakv2] = max(movmean(wheelVelR(peakv1+100:end),10));
-start1 = peakv1-10
+start1 = peakv1-10;
+
 len1 =  150;
-start2 = peakv2-10 + peakv1+100
+start2 = peakv2-10 + peakv1+100;
 len2 = 150;
 startEnd = [1 length(wheelVelR),
     start1 start1+len1,
     start2 start2+len2 ];
-%startEnd = startEnd(1:2,:);
+
 lineWidth = 2;
+
 for i = 2:3
     figure;
     plot(t,wheelVelR(startEnd(i,1):startEnd(i,2))/100,'b','LineWidth',lineWidth);

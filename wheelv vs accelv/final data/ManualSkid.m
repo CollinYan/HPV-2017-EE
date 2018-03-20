@@ -40,7 +40,7 @@ startEnd = [1 length(wheelVelR),
     start2 start2+len2 ];
 %startEnd = startEnd(1:2,:);
 lineWidth = 2;
-for i = 2:3
+for i = 3:3
     figure;
     plot(t,wheelVelR(startEnd(i,1):startEnd(i,2))/100,'b','LineWidth',lineWidth);
     hold on;
@@ -48,9 +48,10 @@ for i = 2:3
     %plot(accelVel(startEnd(i,1):startEnd(i,2))/100,'g');
     ylabel('velocity [mph]')
 
-
+    grid on;
     ylim([-1 20]);
-    yyaxis right;
+    figure;
+    %yyaxis right;
     hold on;
     plot(t,(brakePos(startEnd(i,1):startEnd(i,2))-90)/(175-90)*100,'Color',[0.4 0.8 0.6],'LineWidth',lineWidth);
     plot(t,slipCalc(startEnd(i,1):startEnd(i,2)),'-','Color',[1 0.5 0],'LineWidth',lineWidth);

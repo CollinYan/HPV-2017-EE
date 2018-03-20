@@ -33,6 +33,13 @@ void brake() {
   if (!((millis()*2/periodServoWrite)%2) && !servoWriteTicked) {        
     antiLockBrake(); 
     wheel1PID.Compute();
+    Serial.print(wheel2._mphX100);                            Serial.print("\t");
+    Serial.print(wheel1._mphX100);                            Serial.print("\t");
+    Serial.print((int)(myAccelSpeed._mphX100[accelIndice]));  Serial.print("\t");
+    Serial.print(brakeServoOutput1);                          Serial.print("\t");
+    Serial.print(latestInput1);                               Serial.print("\t");
+    Serial.print(braking);                                    Serial.print("\t");
+    Serial.print(slip2);                                      Serial.print("\t");
     Serial.println();  
     latestInput1 = min(latestInput1, brakeServoOutputProcessed1);
     brakeServo1.write((int)round(latestInput1)); 

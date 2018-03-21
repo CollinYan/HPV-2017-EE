@@ -1,5 +1,5 @@
 /*called by brake which is 10Hz*/
-void antiLockBrake() {
+/*void antiLockBrake() {
   int msTick = wheel2._centerToCenter/1000;
   accelIndice = myAccelSpeed._arrayPos-msTick/(1000/freq);
   if (accelIndice < 0) {
@@ -15,5 +15,5 @@ void antiLockBrake() {
     slip2 = (float)(wheel1._mphX100 - wheel2._mphX100)/wheel1._mphX100*10000;
   }
 
-}
+}*/
 

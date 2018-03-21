@@ -1,4 +1,4 @@
-#include <PID_v1.h>
+//#include <PID_v1.h>
 #include "Servo.h"
 #include "AnalogSmoothInt.h"
 #include "ParkingLock.h"
@@ -112,7 +112,7 @@ double latestInput1 = minServoRange;
 double slip2 = 0;
 
 /* Anti Lock Brake PID Library*/
-PID wheel1PID(&slip2, &latestInput1, &maxSlipPercX100, kP, kI, kD, DIRECT);
+//PID wheel1PID(&slip2, &latestInput1, &maxSlipPercX100, kP, kI, kD, DIRECT);
   
 void setup() {
   brakeServo1.attach(brakePWMPin1,minHighTime,maxHighTime);
@@ -125,9 +125,9 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(wheel2Pin), wheel2UpISR, RISING);
   attachInterrupt(digitalPinToInterrupt(wheel3Pin), wheel3UpISR, RISING);
 
-  wheel1PID.SetMode(AUTOMATIC);
-  wheel1PID.SetSampleTime(45); //slower than brake actuation so we dont have delay
-  wheel1PID.SetOutputLimits((maxServoRange-minServoRange)*0.73+minServoRange, maxServoRange);
+//  wheel1PID.SetMode(AUTOMATIC);
+//  wheel1PID.SetSampleTime(45); //slower than brake actuation so we dont have delay
+//  wheel1PID.SetOutputLimits((maxServoRange-minServoRange)*0.73+minServoRange, maxServoRange);
 
   Serial.begin(9600);
   Serial.println("-- initialized --");
@@ -156,3 +156,38 @@ void loop() {
   Serial.println(end_time - start_time);
   */
 }
+/*continuous*/
+void wheelSpeed() {
+  if (wheel1._interruptedUp) {
+    wheel1.updateSpeed();
+    //Serial.println('1');
+    wheel1._mphX100 = smoothedWheel1.smooth(wheel1._mphX100);
+  }
+  if (wheel2._interruptedUp) {  
+    wheel2.updateSpeed();
+    wheel2._mphX100 = smoothedWheel2.smooth(wheel2._mphX100);
+    //Serial.println('2');
+  }
+  if (wheel3._interruptedUp) {
+    wheel3.updateSpeed();
+    wheel3._mphX100 = smoothedWheel3.smooth(wheel3._mphX100);
+    //Serial.println('3');
+  }
+  if (millis() % (wheel2._maxTime/5000) == 0) {     //check 5x the period for zerospeed
+    wheel1.zeroMPH();
+    wheel2.zeroMPH();
+    wheel3.zeroMPH();
+  }
+}
+
+/*external interrupts*/
+void wheel1UpISR() {
+  wheel1.readTimeUp();
+}
+void wheel2UpISR() {
+  wheel2.readTimeUp();
+}
+void wheel3UpISR() {
+  wheel3.readTimeUp();
+}
+

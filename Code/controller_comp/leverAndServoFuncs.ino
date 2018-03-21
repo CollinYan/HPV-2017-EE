@@ -31,8 +31,9 @@ void readLever() {
 /*10Hz*/
 void brake() {
   if (!((millis()*2/periodServoWrite)%2) && !servoWriteTicked) {        
-    antiLockBrake(); 
-    wheel1PID.Compute();
+//    antiLockBrake(); 
+//    wheel1PID.Compute();
+    latestInput1 = brakeServoOutputProcessed1;
     Serial.print(wheel2._mphX100);                            Serial.print("\t");
     Serial.print(wheel1._mphX100);                            Serial.print("\t");
     Serial.print((int)(myAccelSpeed._mphX100[accelIndice]));  Serial.print("\t");
@@ -41,8 +42,8 @@ void brake() {
     Serial.print(braking);                                    Serial.print("\t");
     Serial.print(slip2);                                      Serial.print("\t");
     Serial.println();  
-    latestInput1 = min(latestInput1, brakeServoOutputProcessed1);
-    brakeServo1.write((int)round(latestInput1)); 
+//    latestInput1 = min(latestInput1, brakeServoOutputProcessed1);
+    brakeServo1.write(latestInput1); 
     //brakeServo1.write(brakeServoOutput1); 
     brakeServo2.write(latestInput1); 
     brakeServo3.write(latestInput1);
